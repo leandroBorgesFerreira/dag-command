@@ -11,7 +11,7 @@ import org.gradle.api.Project
 
 private const val CONFIGURE_CLOSE_NAME = "dagcommand"
 
-class DagUnitPlugin : Plugin<Project> {
+class DagCommandPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         val extension: CommandExtension = project.extensions.create<CommandExtension>(CONFIGURE_CLOSE_NAME)
 
