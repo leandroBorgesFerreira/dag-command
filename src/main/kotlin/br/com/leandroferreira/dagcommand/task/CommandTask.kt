@@ -1,18 +1,18 @@
 package br.com.leandroferreira.dagcommand.task
 
 import br.com.leandroferreira.dagcommand.domain.Config
-import br.com.leandroferreira.dagcommand.logic.affectedModules
-import br.com.leandroferreira.dagcommand.logic.changedModules
-import br.com.leandroferreira.dagcommand.logic.parseAdjacencyList
+import br.com.leandroferreira.dagcommand.logic.*
 import br.com.leandroferreira.dagcommand.output.writeToFile
 import br.com.leandroferreira.dagcommand.utils.CommandExec
+import com.google.gson.Gson
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 
 private const val OUTPUT_DIRECTORY_NAME = "dag-command"
-private const val OUTPUT_FILE_NAME = "affected-modules.txt"
+private const val OUTPUT_FILE_NAME_AFFECTED = "affected-modules.txt"
+private const val OUTPUT_FILE_NAME_GRAPH = "adjacencies-list.json"
 
 open class CommandTask : DefaultTask() {
 
@@ -21,11 +21,24 @@ open class CommandTask : DefaultTask() {
 
     @TaskAction
     private fun command() {
+        println("--- Config ---")
         println("Filter: ${config.filter.value}")
-        println("Path: ${project.buildDir.path}")
+        println("Output path: ${project.buildDir.path}")
+        println("--------------\n")
 
-        val affectedModules = affectedModules(parseAdjacencyList(project, config), changedModules(CommandExec))
+        val adjacencyList: AdjacencyList = parseAdjacencyList(project, config)
 
-        writeToFile(File(project.buildDir.path, OUTPUT_DIRECTORY_NAME), OUTPUT_FILE_NAME, affectedModules)
+        print("Printing adjacency list... ")
+        writeToFile(
+            File(project.buildDir.path, OUTPUT_DIRECTORY_NAME),
+            OUTPUT_FILE_NAME_GRAPH,
+            Gson().toJson(adjacencyList)
+        )
+
+        print("Done\n")
+
+        val affectedModules = affectedModules(adjacencyList, changedModules(CommandExec))
+
+        writeToFile(File(project.buildDir.path, OUTPUT_DIRECTORY_NAME), OUTPUT_FILE_NAME_AFFECTED, affectedModules)
     }
 }

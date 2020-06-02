@@ -29,7 +29,7 @@ class GraphKtTest {
     }
 
     @Test
-    fun `proves that implementation works for completly disconnected graph`() {
+    fun `proves that implementation works for completely disconnected graph`() {
         val resultSet = affectedModules(disconnectedGraph(), listOf("A", "B", "C", "D", "E", "F"))
 
         assertEquals(setOf("A", "B", "C", "D", "E", "F"), resultSet)

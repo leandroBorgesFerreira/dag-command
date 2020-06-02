@@ -6,11 +6,13 @@ import br.com.leandroferreira.dagcommand.enums.PlugginType
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ProjectDependency
 
-fun parseAdjacencyList(project: Project, config: Config) =
-    project.subprojects.filter { subProject -> subProject.isModuleType(config.filter) }
-        .flatMap(::dependencyMapping) //We get dependencies not dependents.
-        .let(::getAdjacencyList) //Our adjacency list is reversed
-        .let(::revertAdjacencyList) //Revert to normal adjacency list.
+fun parseAdjacencyList(project: Project, config: Config): Map<String, Set<String>> =
+    project.subprojects
+        .filter { subProject -> subProject.isModuleType(config.filter) }
+        .map { subProject ->
+            subProject.name to subProject.parseDependencies().map { dep -> dep.name }.toSet()
+        }
+        .toMap()
 
 private fun Project.isModuleType(moduleType: ModuleType): Boolean {
     val isLibrary = project.plugins.hasPlugin(PlugginType.Library.value)
@@ -19,16 +21,17 @@ private fun Project.isModuleType(moduleType: ModuleType): Boolean {
     return when (moduleType) {
         ModuleType.Library -> isLibrary
         ModuleType.Application -> isApplication
-        else -> isLibrary || isApplication
+        else -> true
     }
 }
 
-private fun dependencyMapping(project: Project): List<Pair<String, String>> =
-    project.configurations.map { project to it }
-        .flatMap { (project, configuration) ->
+private fun Project.parseDependencies(): List<Project> =
+    project.configurations
+        .flatMap { configuration ->
             configuration
                 .dependencies
                 .withType(ProjectDependency::class.java)
-                .map { project to it.dependencyProject }
+                .map { projectDependency ->
+                    projectDependency.dependencyProject
+                }
         }
-        .map { (project, dependency) -> project.name to dependency.name }
