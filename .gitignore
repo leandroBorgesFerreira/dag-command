@@ -1,0 +1,11 @@
+## Folder
+
+.idea
+.gradle
+build
+out
+
+## File
+
+*.iml
+.DS_Store
