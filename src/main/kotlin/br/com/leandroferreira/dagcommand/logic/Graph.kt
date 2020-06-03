@@ -12,12 +12,8 @@ fun affectedModules(adjacencyList: AdjacencyList, modules: List<String>): Set<St
 
 private fun traverseGraph(adjacencyList: AdjacencyList, module: String, resultSet: MutableSet<String>) {
     resultSet.add(module)
-
-    val dependentModules: Set<String>? = adjacencyList[module]
-
-    dependentModules?.let(resultSet::addAll)
-
-    dependentModules?.forEach { dependentModule ->
+    
+    adjacencyList[module]?.forEach { dependentModule ->
         traverseGraph(adjacencyList, dependentModule, resultSet)
     }
 }
