@@ -9,7 +9,7 @@ This pluggin makes a diff from your branch and the `develop` branch and writes w
 
 Work extension of this project: https://github.com/hpedrorodrigues/dag-modules
 
-##How to use
+## How to use
 
 Still on wip. But you can use like this using your local maven
 
