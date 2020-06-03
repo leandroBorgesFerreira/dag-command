@@ -1,7 +1,8 @@
-import java.net.URI
+val artifactIdVal = "dag-command"
+val versionVal = "1.0.0"
 
 group = "br.com.leandroferreira"
-version = "1.0.0"
+version = versionVal
 
 plugins {
     kotlin("jvm") version ("1.3.72")
@@ -26,7 +27,7 @@ dependencies {
 gradlePlugin {
     plugins {
         register(rootProject.name) {
-            id = "$group.dag-command"
+            id = "$group.$artifactIdVal"
             displayName = "Unit tests following the DAG"
             description = "Unit tests only the changed modules in the dependencies graph"
             implementationClass = "$group.dagcommand.DagCommandPlugin"
@@ -34,8 +35,14 @@ gradlePlugin {
     }
 }
 
-//publishing {
-//    repositories {
-//        maven { url = URI("file:///${System.getenv("HOME")}/.gradle/caches") }
-//    }
-//}
+publishing {
+    publications {
+        create<MavenPublication>("dagaffected") {
+            groupId = group.toString()
+            artifactId = artifactIdVal
+            version = versionVal
+
+            from(components["java"])
+        }
+    }
+}
