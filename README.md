@@ -6,7 +6,7 @@ Commands running only on desired modules
 
 Work extension of this project: https://github.com/hpedrorodrigues/dag-modules
 
-##How to use
+## How to use
 
 Still on wip. But you can use like this using your local maven
 
