@@ -26,4 +26,11 @@ buildscript {
 }
 
 apply plugin: 'br.com.leandroferreira.dag-command'
+
+dagCommand {
+    filter = "all"
+    defaultBranch = "develop"
+    outputType = "console"
+}
 ```
+
