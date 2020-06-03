@@ -1,6 +1,7 @@
 package br.com.leandroferreira.dagcommand.task
 
 import br.com.leandroferreira.dagcommand.domain.Config
+import br.com.leandroferreira.dagcommand.enums.OutputType
 import br.com.leandroferreira.dagcommand.logic.*
 import br.com.leandroferreira.dagcommand.output.writeToFile
 import br.com.leandroferreira.dagcommand.utils.CommandExec
@@ -28,23 +29,34 @@ open class CommandTask : DefaultTask() {
 
         commandWithFeedback("Writing adjacency list... ") {
             writeToFile(
-                File(project.buildDir.path, OUTPUT_DIRECTORY_NAME),
+                File(buildPath(), OUTPUT_DIRECTORY_NAME),
                 OUTPUT_FILE_NAME_GRAPH,
                 Gson().toJson(adjacencyList)
             )
         }
 
-        val affectedModules = affectedModules(adjacencyList, changedModules(CommandExec))
+        val changedModules: List<String> = changedModules(CommandExec, config.defaultBranch).also { modules ->
+            println("Changed modules: ${modules.joinToString()}")
+        }
 
-        commandWithFeedback("Writing affected modules list... ") {
-            writeToFile(File(project.buildDir.path, OUTPUT_DIRECTORY_NAME), OUTPUT_FILE_NAME_AFFECTED, affectedModules)
+        val affectedModules: Set<String> = affectedModules(adjacencyList, changedModules)
+
+        when (config.outputType) {
+            OutputType.CONSOLE -> printAffectedGraph(affectedModules)
+            OutputType.FILE -> commandWithFeedback("Writing affected modules list... ") {
+                writeToFile(File(buildPath(), OUTPUT_DIRECTORY_NAME), OUTPUT_FILE_NAME_AFFECTED, affectedModules)
+            }
         }
     }
+
+    private fun buildPath() = project.buildDir.path
 }
 
 private fun printConfig(project: Project, config: Config) {
     println("--- Config ---")
     println("Filter: ${config.filter.value}")
+    println("Default branch: ${config.defaultBranch}")
+    println("Output type: ${config.outputType.value}")
     println("Output path: ${project.buildDir.path}")
     println("--------------\n")
 }
@@ -52,5 +64,9 @@ private fun printConfig(project: Project, config: Config) {
 private fun commandWithFeedback(message: String, func: () -> Unit) {
     print(message)
     func()
-    print("Done\n")
+    print("Done\n\n")
+}
+
+private fun printAffectedGraph(set: Set<String>) {
+    println("Affected modules: ${set.joinToString()}")
 }

@@ -9,13 +9,14 @@ import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-private const val CONFIGURE_CLOSE_NAME = "dag-command"
+private const val CONFIGURE_CLOJURE_NAME = "dagCommand"
+private const val CONFIGURE_COMMAND_NAME = "dag-command"
 
 class DagCommandPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        val extension: CommandExtension = project.extensions.create<CommandExtension>(CONFIGURE_CLOSE_NAME)
+        val extension: CommandExtension = project.extensions.create<CommandExtension>(CONFIGURE_CLOJURE_NAME)
 
-        project.tasks.registerExt<CommandTask>("dag-command", Action {
+        project.tasks.registerExt<CommandTask>(CONFIGURE_COMMAND_NAME, Action {
             it.config = extension.parse()
         })
     }

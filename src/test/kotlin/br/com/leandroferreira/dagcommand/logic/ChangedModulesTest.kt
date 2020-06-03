@@ -15,7 +15,7 @@ class ChangedModulesTest {
 
     @Test
     fun `should parse git modules correctly`() {
-        assertEquals(expectedModules(), changedModules(commandExecutor))
+        assertEquals(expectedModules(), changedModules(commandExecutor, "develop"))
     }
 }
 
