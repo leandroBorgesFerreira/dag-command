@@ -13,6 +13,7 @@ fun parseAdjacencyList(project: Project, config: Config): Map<String, Set<String
             subProject.name to subProject.parseDependencies().map { dep -> dep.name }.toSet()
         }
         .toMap()
+        .let(::revertAdjacencyList)
 
 private fun Project.isModuleType(moduleType: ModuleType): Boolean {
     val isLibrary = project.plugins.hasPlugin(PlugginType.Library.value)
