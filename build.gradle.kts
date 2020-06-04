@@ -1,7 +1,7 @@
 val artifactIdVal = "dag-command"
 val versionVal = "1.0.0"
 
-group = "br.com.leandroferreira"
+group = "com.github.leandroborgesferreira"
 version = versionVal
 
 plugins {
