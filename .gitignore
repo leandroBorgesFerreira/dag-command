@@ -9,3 +9,6 @@ out
 
 *.iml
 .DS_Store
+
+gradle.properties
+secret-ring.gpg
