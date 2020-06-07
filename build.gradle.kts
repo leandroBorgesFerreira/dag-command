@@ -1,6 +1,6 @@
 val artifactIdVal = "dag-command"
 val versionVal = "1.0.0"
-val publicationName="DagCommand"
+val publicationName="dagCommand"
 
 group = "com.github.leandroborgesferreira"
 version = versionVal
@@ -104,6 +104,5 @@ publishing {
 }
 
 signing {
-//    sign(configurations.archives.get())
-    sign(publishing.publications[publicationName]) //TODO: This still needs to be tested
+    sign(publishing.publications[publicationName])
 }
