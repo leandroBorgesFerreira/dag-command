@@ -14,7 +14,6 @@ plugins {
     signing
     `maven-publish`
     id("io.codearte.nexus-staging") version ("0.21.2")
-//    id("io.codearte.nexus-staging")
 }
 
 java {
