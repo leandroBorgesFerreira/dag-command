@@ -4,8 +4,8 @@ val versionVal = "1.0.0"
 group = "com.github.leandroborgesferreira"
 version = versionVal
 
-fun getNexusUserName(): String = System.getenv("SONATYPE_NEXUS_USERNAME")
-fun getNexusPassword(): String = System.getenv("SONATYPE_NEXUS_PASSWORD")
+fun getNexusUserName(): String? = System.getenv("SONATYPE_NEXUS_USERNAME")
+fun getNexusPassword(): String? = System.getenv("SONATYPE_NEXUS_PASSWORD")
 
 plugins {
     kotlin("jvm") version ("1.3.72")
