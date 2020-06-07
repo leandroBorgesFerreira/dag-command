@@ -21,11 +21,11 @@ buildscript {
     }
 
     dependencies {
-		 classpath 'com.github.leandroferreira:dag-command:1.0.0'
+		 classpath 'com.github.leandroborgesferreira:dag-command:1.0.0'
     }
 }
 
-apply plugin: 'com.github.leandroferreira.dag-command'
+apply plugin: 'com.github.leandroborgesferreira.dag-command'
 
 dagCommand {
     filter = "all"

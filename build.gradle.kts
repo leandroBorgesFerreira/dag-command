@@ -103,5 +103,5 @@ publishing {
 }
 
 signing {
-    sign(configurations.archives.get())
+//    sign(configurations.archives.get())
 }
