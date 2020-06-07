@@ -1,5 +1,6 @@
 val artifactIdVal = "dag-command"
 val versionVal = "1.0.0"
+val publicationName="DagCommand"
 
 group = "com.github.leandroborgesferreira"
 version = versionVal
@@ -53,7 +54,7 @@ nexusStaging {
 
 publishing {
     publications {
-        create<MavenPublication>("DagCommand") {
+        create<MavenPublication>(publicationName) {
             groupId = group.toString()
             artifactId = artifactIdVal
             version = versionVal
@@ -104,4 +105,5 @@ publishing {
 
 signing {
 //    sign(configurations.archives.get())
+    sign(publishing.publications[publicationName]) //TODO: This still needs to be tested
 }
