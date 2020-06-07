@@ -1,3 +1,6 @@
+
+![Java CI with Gradle](https://github.com/leandroBorgesFerreira/dag-command/workflows/Java%20CI%20with%20Gradle/badge.svg)
+
 # dag-command
 
 Affected modules by your branch. 
@@ -21,11 +24,11 @@ buildscript {
     }
 
     dependencies {
-		 classpath 'com.github.leandroborgesferreira:dag-command:1.0.0'
+		 classpath 'com.github.leandroferreira:dag-command:1.0.0'
     }
 }
 
-apply plugin: 'com.github.leandroborgesferreira.dag-command'
+apply plugin: 'com.github.leandroferreira.dag-command'
 
 dagCommand {
     filter = "all"
