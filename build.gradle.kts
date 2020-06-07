@@ -1,8 +1,11 @@
 val artifactIdVal = "dag-command"
-val versionVal = "1.0.0-SNAPSHOT"
+val versionVal = "1.0.0"
 
 group = "com.github.leandroborgesferreira"
 version = versionVal
+
+fun getNexusUserName(): String = System.getenv("SONATYPE_NEXUS_USERNAME")
+fun getNexusPassword(): String = System.getenv("SONATYPE_NEXUS_PASSWORD")
 
 plugins {
     kotlin("jvm") version ("1.3.72")
@@ -10,6 +13,8 @@ plugins {
     id("maven-publish")
     signing
     `maven-publish`
+    id("io.codearte.nexus-staging") version ("0.21.2")
+//    id("io.codearte.nexus-staging")
 }
 
 java {
@@ -19,10 +24,6 @@ java {
 
 repositories {
     mavenCentral()
-}
-
-signing {
-    sign(configurations.archives.get())
 }
 
 dependencies {
@@ -44,6 +45,11 @@ gradlePlugin {
             implementationClass = "$group.dagcommand.DagCommandPlugin"
         }
     }
+}
+
+nexusStaging {
+    username = getNexusUserName()
+    password = getNexusPassword()
 }
 
 publishing {
@@ -85,8 +91,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username = project.property("nexusUsername").toString()
-                password = project.property("nexusPassword").toString()
+                username = getNexusUserName()
+                password = getNexusPassword()
             }
 
             val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
@@ -95,4 +101,8 @@ publishing {
             url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
         }
     }
+}
+
+signing {
+    sign(configurations.archives.get())
 }
