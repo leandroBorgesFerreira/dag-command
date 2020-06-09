@@ -14,26 +14,24 @@ Work extension of this project: https://github.com/hpedrorodrigues/dag-modules
 
 ## Configuration
 
-Still on wip. But you can use like this using your local maven
-
 ```
 buildscript {
 
     repositories {
-        mavenLocal()
+        mavenCentral()
     }
 
     dependencies {
-		 classpath 'com.github.leandroferreira:dag-command:1.0.0'
+	classpath 'com.github.leandroborgesferreira:dag-command:1.0.0'
     }
 }
 
-apply plugin: 'com.github.leandroferreira.dag-command'
+apply plugin: 'com.github.leandroborgesferreira.dag-command'
 
 dagCommand {
     filter = "all"
     defaultBranch = "develop"
-    outputType = "console"
+    outputType = "file"
 }
 ```
 
