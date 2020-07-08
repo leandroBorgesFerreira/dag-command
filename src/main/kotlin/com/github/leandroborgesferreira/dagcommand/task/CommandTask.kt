@@ -39,7 +39,9 @@ open class CommandTask : DefaultTask() {
             println("Changed modules: ${modules.joinToString()}")
         }
 
-        val affectedModules: Set<String> = affectedModules(adjacencyList, changedModules)
+        val affectedModules: Set<String> = affectedModules(adjacencyList, changedModules).also { modules ->
+            println("Affected modules: ${modules.joinToString()}")
+        }
 
         when (config.outputType) {
             OutputType.CONSOLE -> printAffectedGraph(affectedModules)
