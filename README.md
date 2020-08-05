@@ -22,7 +22,7 @@ buildscript {
     }
 
     dependencies {
-	classpath 'com.github.leandroborgesferreira:dag-command:1.0.0'
+	classpath 'com.github.leandroborgesferreira:dag-command:1.0.3'
     }
 }
 
