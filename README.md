@@ -1,6 +1,8 @@
 
 ![Java CI with Gradle](https://github.com/leandroBorgesFerreira/dag-command/workflows/Java%20CI%20with%20Gradle/badge.svg)
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.leandroborgesferreira/dag-command/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.leandroborgesferreira/dag-command/)
+
 # dag-command
 
 Affected modules by your branch. 
