@@ -36,17 +36,19 @@ open class CommandTask : DefaultTask() {
         }
 
         val changedModules: List<String> = changedModules(CommandExec, config.defaultBranch).also { modules ->
-            println("Changed modules: ${modules.joinToString()}")
+            println("Changed modules: ${modules.joinToString()}\n")
         }
 
         val affectedModules: Set<String> = affectedModules(adjacencyList, changedModules).also { modules ->
-            println("Affected modules: ${modules.joinToString()}")
+            println("Affected modules: ${modules.joinToString()}\n")
         }
 
         when (config.outputType) {
-            OutputType.CONSOLE -> printAffectedGraph(affectedModules)
             OutputType.FILE -> commandWithFeedback("Writing affected modules list... ") {
                 writeToFile(File(buildPath(), OUTPUT_DIRECTORY_NAME), OUTPUT_FILE_NAME_AFFECTED, affectedModules)
+            }
+            OutputType.CONSOLE -> {
+                //Console was already printed
             }
         }
     }
