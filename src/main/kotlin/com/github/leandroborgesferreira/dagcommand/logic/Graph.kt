@@ -1,5 +1,7 @@
 package com.github.leandroborgesferreira.dagcommand.logic
 
+import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
+
 fun affectedModules(adjacencyList: AdjacencyList, modules: List<String>): Set<String> {
     val resultSet: MutableSet<String> = mutableSetOf()
 

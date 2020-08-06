@@ -1,5 +1,6 @@
 package com.github.leandroborgesferreira.dagcommand.task
 
+import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 import com.github.leandroborgesferreira.dagcommand.domain.Config
 import com.github.leandroborgesferreira.dagcommand.enums.OutputType
 import com.github.leandroborgesferreira.dagcommand.logic.*
@@ -15,6 +16,7 @@ import java.io.File
 private const val OUTPUT_DIRECTORY_NAME = "dag-command"
 private const val OUTPUT_FILE_NAME_AFFECTED = "affected-modules.txt"
 private const val OUTPUT_FILE_NAME_GRAPH = "adjacencies-list.json"
+private const val OUTPUT_FILE_NAME_DATA_FRAME = "dataframe.json"
 
 open class CommandTask : DefaultTask() {
 
@@ -25,14 +27,28 @@ open class CommandTask : DefaultTask() {
     private fun command() {
         printConfig(project, config)
 
-        val adjacencyList: AdjacencyList = parseAdjacencyList(project, config)
+        val adjacencyList: AdjacencyList = parseAdjacencyList(project, config).also {
+            if (config.printAdjacencyList) {
+                commandWithFeedback("Writing adjacency list... ") {
+                    writeToFile(
+                        File(buildPath(), OUTPUT_DIRECTORY_NAME),
+                        OUTPUT_FILE_NAME_GRAPH,
+                        Gson().toJson(it)
+                    )
+                }
+            }
+        }
 
-        commandWithFeedback("Writing adjacency list... ") {
-            writeToFile(
-                File(buildPath(), OUTPUT_DIRECTORY_NAME),
-                OUTPUT_FILE_NAME_GRAPH,
-                Gson().toJson(adjacencyList)
-            )
+        if (config.printDataFrame) {
+            createDataFrame(adjacencyList).let { frames ->
+                commandWithFeedback("Writing data frame...") {
+                    writeToFile(
+                        File(buildPath(), OUTPUT_DIRECTORY_NAME),
+                        OUTPUT_FILE_NAME_DATA_FRAME,
+                        Gson().toJson(frames)
+                    )
+                }
+            }
         }
 
         val changedModules: List<String> = changedModules(CommandExec, config.defaultBranch).also { modules ->
