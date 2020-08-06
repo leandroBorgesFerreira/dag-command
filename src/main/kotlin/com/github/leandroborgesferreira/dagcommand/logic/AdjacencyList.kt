@@ -1,6 +1,6 @@
 package com.github.leandroborgesferreira.dagcommand.logic
 
-typealias AdjacencyList = Map<String, Set<String>>
+import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 
 fun revertAdjacencyList(adjacencyList: AdjacencyList): AdjacencyList {
     val resultMap = mutableMapOf<String, Set<String>>()

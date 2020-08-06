@@ -6,5 +6,7 @@ import com.github.leandroborgesferreira.dagcommand.enums.OutputType
 data class Config(
     val filter: ModuleType,
     val defaultBranch: String,
-    val outputType: OutputType
+    val outputType: OutputType,
+    val printAdjacencyList: Boolean,
+    val printDataFrame: Boolean
 )

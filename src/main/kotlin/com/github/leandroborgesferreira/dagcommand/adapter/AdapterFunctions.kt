@@ -5,7 +5,13 @@ import com.github.leandroborgesferreira.dagcommand.enums.ModuleType
 import com.github.leandroborgesferreira.dagcommand.enums.OutputType
 import com.github.leandroborgesferreira.dagcommand.extension.CommandExtension
 
-fun CommandExtension.parse() : Config = Config(findFilter(filter), defaultBranch, findOutputType(outputType))
+fun CommandExtension.parse() : Config =
+    Config(findFilter(filter),
+        defaultBranch,
+        findOutputType(outputType),
+        printAdjacencyList,
+        printDataFrame
+    )
 
 private fun findFilter(filter: String): ModuleType =
     ModuleType
