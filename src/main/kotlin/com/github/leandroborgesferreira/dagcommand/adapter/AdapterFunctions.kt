@@ -10,7 +10,7 @@ fun CommandExtension.parse() : Config =
         defaultBranch,
         findOutputType(outputType),
         printAdjacencyList,
-        printDataFrame
+        printEdgesList
     )
 
 private fun findFilter(filter: String): ModuleType =
