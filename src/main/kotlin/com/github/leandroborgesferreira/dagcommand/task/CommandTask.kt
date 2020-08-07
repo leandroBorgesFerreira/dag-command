@@ -16,7 +16,7 @@ import java.io.File
 private const val OUTPUT_DIRECTORY_NAME = "dag-command"
 private const val OUTPUT_FILE_NAME_AFFECTED = "affected-modules.txt"
 private const val OUTPUT_FILE_NAME_GRAPH = "adjacencies-list.json"
-private const val OUTPUT_FILE_NAME_DATA_FRAME = "dataframe.json"
+private const val OUTPUT_FILE_NAME_EDGE_LIST = "edge-list.json"
 
 open class CommandTask : DefaultTask() {
 
@@ -41,10 +41,10 @@ open class CommandTask : DefaultTask() {
 
         if (config.printDataFrame) {
             createDataFrame(adjacencyList).let { frames ->
-                commandWithFeedback("Writing data frame...") {
+                commandWithFeedback("Writing edges list...") {
                     writeToFile(
                         File(buildPath(), OUTPUT_DIRECTORY_NAME),
-                        OUTPUT_FILE_NAME_DATA_FRAME,
+                        OUTPUT_FILE_NAME_EDGE_LIST,
                         Gson().toJson(frames)
                     )
                 }

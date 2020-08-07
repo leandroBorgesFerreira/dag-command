@@ -5,5 +5,5 @@ open class CommandExtension(
     var defaultBranch: String = "master",
     var outputType: String = "console",
     var printAdjacencyList: Boolean = true,
-    var printDataFrame: Boolean = true
+    var printEdgesList: Boolean = true
 )

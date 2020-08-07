@@ -14,7 +14,7 @@ private const val CONFIGURE_COMMAND_NAME = "dag-command"
 
 class DagCommandPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        val extension: CommandExtension = project.extensions.create<CommandExtension>(CONFIGURE_CLOJURE_NAME)
+        val extension: CommandExtension = project.extensions.create(CONFIGURE_CLOJURE_NAME)
 
         project.tasks.registerExt<CommandTask>(CONFIGURE_COMMAND_NAME, Action {
             it.config = extension.parse()
