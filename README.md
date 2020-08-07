@@ -14,6 +14,7 @@ The pluggin also writes the dependency graph in a file.
 Work extension of this project: https://github.com/hpedrorodrigues/dag-modules
 
 ## Configuration
+#### Groovy
 
 ```
 buildscript {
@@ -23,7 +24,7 @@ buildscript {
     }
 
     dependencies {
-	classpath 'com.github.leandroborgesferreira:dag-command:1.0.3'
+	    classpath 'com.github.leandroborgesferreira:dag-command:1.1.1'
     }
 }
 
@@ -36,10 +37,41 @@ dagCommand {
 }
 ```
 
-## Run
+#### Kotlin
+
+```
+import com.github.leandroborgesferreira.dagcommand.DagCommandPlugin
+import com.github.leandroborgesferreira.dagcommand.extension.CommandExtension
+
+buildscript {
+	 repositories {
+    	mavenCentral() // or jcenter()
+    }
+    
+    dependencies {
+    	classpath("com.github.leandroborgesferreira:dag-command:1.1.1")
+    }
+}
+
+apply<DagCommandPlugin>()
+
+the<CommandExtension>().run {
+    this.filter = "all"
+    this.defaultBranch = "master"
+    this.outputType = "file"
+    this.printAdjacencyList = true
+    this.printEdgesList = true
+}
+```
+
+
+## Usage
 
 Run the task:
 
 ```
 ./gradlew dag-command
 ```
+
+New files will be create inside `./build/dag-command` you will be able to find the adjacency list of your modules, the edge list and the affected modules. 
+
