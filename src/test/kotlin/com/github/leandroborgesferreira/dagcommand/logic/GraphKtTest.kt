@@ -1,5 +1,6 @@
 package com.github.leandroborgesferreira.dagcommand.logic
 
+import com.github.leandroborgesferreira.dagcommand.domain.ModuleBuildStage
 import com.github.leandroborgesferreira.dagcommand.utils.disconnectedGraph
 import com.github.leandroborgesferreira.dagcommand.utils.simpleGraph
 import org.junit.Test
@@ -33,5 +34,24 @@ class GraphKtTest {
         val resultSet = affectedModules(disconnectedGraph(), listOf("A", "B", "C", "D", "E", "F"))
 
         assertEquals(setOf("A", "B", "C", "D", "E", "F"), resultSet)
+    }
+
+    @Test
+    fun `proves that root nodes can be found`() {
+        assertEquals(setOf("A"), findRootNodes(simpleGraph()))
+        assertEquals(disconnectedGraph().keys, findRootNodes(disconnectedGraph()))
+    }
+
+    @Test
+    fun `proves that build stage can be correctly found`() {
+        val expected = mapOf(
+            0 to listOf("A"),
+            1 to listOf("B", "D"),
+            2 to listOf("C"),
+            3 to listOf("E"),
+            4 to listOf("F")
+        )
+
+        assertEquals(expected, buildOrder(simpleGraph()))
     }
 }

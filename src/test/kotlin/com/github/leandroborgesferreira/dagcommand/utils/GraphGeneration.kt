@@ -1,6 +1,6 @@
 package com.github.leandroborgesferreira.dagcommand.utils
 
-import com.github.leandroborgesferreira.dagcommand.domain.Frame
+import com.github.leandroborgesferreira.dagcommand.domain.Edge
 
 fun simpleGraph(): Map<String, Set<String>> =
     mapOf(
@@ -8,20 +8,22 @@ fun simpleGraph(): Map<String, Set<String>> =
         "B" to setOf("C", "F"),
         "C" to setOf("E", "F"),
         "D" to setOf("E", "F"),
+        "E" to setOf("F"),
         "F" to emptySet()
     )
 
-fun simpleDataFrame(): List<Frame> =
+fun simpleEdgeList(): List<Edge> =
     listOf(
-        Frame("A", "B", 1),
-        Frame("A", "C", 1),
-        Frame("A", "D", 1),
-        Frame("B", "C", 1),
-        Frame("B", "F", 1),
-        Frame("C", "E", 1),
-        Frame("C", "F", 1),
-        Frame("D", "E", 1),
-        Frame("D", "F", 1)
+        Edge("A", "B", 1),
+        Edge("A", "C", 1),
+        Edge("A", "D", 1),
+        Edge("B", "C", 1),
+        Edge("B", "F", 1),
+        Edge("C", "E", 1),
+        Edge("C", "F", 1),
+        Edge("D", "E", 1),
+        Edge("D", "F", 1),
+        Edge("E", "F", 1)
     )
 
 fun disconnectedGraph(): Map<String, Set<String>> =

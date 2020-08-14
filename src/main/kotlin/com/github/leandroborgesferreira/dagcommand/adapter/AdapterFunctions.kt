@@ -5,12 +5,15 @@ import com.github.leandroborgesferreira.dagcommand.enums.ModuleType
 import com.github.leandroborgesferreira.dagcommand.enums.OutputType
 import com.github.leandroborgesferreira.dagcommand.extension.CommandExtension
 
-fun CommandExtension.parse() : Config =
-    Config(findFilter(filter),
-        defaultBranch,
-        findOutputType(outputType),
-        printAdjacencyList,
-        printEdgesList
+fun CommandExtension.parse(): Config =
+    Config(
+        filter = findFilter(filter),
+        defaultBranch = defaultBranch,
+        outputType = findOutputType(outputType),
+        outputPath = outputPath,
+        printAdjacencyList = printAdjacencyList,
+        printEdgesList = printEdgesList,
+        printBuildStages = printBuildStages
     )
 
 private fun findFilter(filter: String): ModuleType =
