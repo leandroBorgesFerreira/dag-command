@@ -18,5 +18,6 @@ private fun simpleRevertedGraph() =
         "B" to setOf("A"),
         "C" to setOf("A", "B"),
         "D" to setOf("A"),
-        "F" to setOf("B", "C", "D")
+        "E" to setOf("C", "D"),
+        "F" to setOf("B", "C", "D", "E")
     )

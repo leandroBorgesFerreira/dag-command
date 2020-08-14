@@ -15,8 +15,9 @@ import java.io.File
 
 private const val OUTPUT_DIRECTORY_NAME = "dag-command"
 private const val OUTPUT_FILE_NAME_AFFECTED = "affected-modules.txt"
-private const val OUTPUT_FILE_NAME_GRAPH = "adjacencies-list.json"
-private const val OUTPUT_FILE_NAME_EDGE_LIST = "edge-list.json"
+private const val OUTPUT_GRAPH = "adjacencies-list.json"
+private const val OUTPUT_EDGE_LIST = "edge-list.json"
+private const val OUTPUT_BUILD_STAGES = "build-stages.json"
 
 open class CommandTask : DefaultTask() {
 
@@ -29,25 +30,23 @@ open class CommandTask : DefaultTask() {
 
         val adjacencyList: AdjacencyList = parseAdjacencyList(project, config).also {
             if (config.printAdjacencyList) {
-                commandWithFeedback("Writing adjacency list... ") {
-                    writeToFile(
-                        File(buildPath(), OUTPUT_DIRECTORY_NAME),
-                        OUTPUT_FILE_NAME_GRAPH,
-                        Gson().toJson(it)
-                    )
+                commandWithFeedback("Writing adjacency list...") {
+                    fileOutput(OUTPUT_GRAPH, it)
                 }
             }
         }
 
-        if (config.printDataFrame) {
-            createDataFrame(adjacencyList).let { frames ->
+        if (config.printEdgesList) {
+            createEdgeList(adjacencyList).let { edges ->
                 commandWithFeedback("Writing edges list...") {
-                    writeToFile(
-                        File(buildPath(), OUTPUT_DIRECTORY_NAME),
-                        OUTPUT_FILE_NAME_EDGE_LIST,
-                        Gson().toJson(frames)
-                    )
+                    fileOutput(OUTPUT_EDGE_LIST, edges)
                 }
+            }
+        }
+
+        buildOrder(adjacencyList).let { buildStages ->
+            commandWithFeedback("Build stages...") {
+                fileOutput(OUTPUT_BUILD_STAGES, buildStages)
             }
         }
 
@@ -69,7 +68,15 @@ open class CommandTask : DefaultTask() {
         }
     }
 
-    private fun buildPath() = project.buildDir.path
+    private fun buildPath() = config.outputPath ?: project.buildDir.path
+
+    private fun fileOutput(fileName: String, data: Any) {
+        writeToFile(
+            File(buildPath(), OUTPUT_DIRECTORY_NAME),
+            fileName,
+            Gson().toJson(data)
+        )
+    }
 }
 
 private fun printConfig(project: Project, config: Config) {
@@ -84,9 +91,12 @@ private fun printConfig(project: Project, config: Config) {
 private fun commandWithFeedback(message: String, func: () -> Unit) {
     print(message)
     func()
-    print("Done\n\n")
+    print(" Done\n\n")
 }
 
 private fun printAffectedGraph(set: Set<String>) {
     println("Affected modules: ${set.joinToString()}")
 }
+
+
+
