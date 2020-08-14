@@ -37,16 +37,14 @@ open class CommandTask : DefaultTask() {
         }
 
         if (config.printEdgesList) {
-            createEdgeList(adjacencyList).let { edges ->
-                commandWithFeedback("Writing edges list...") {
-                    fileOutput(OUTPUT_EDGE_LIST, edges)
-                }
+            commandWithFeedback("Writing edges list...") {
+                fileOutput(OUTPUT_EDGE_LIST, createEdgeList(adjacencyList))
             }
         }
 
-        buildOrder(adjacencyList).let { buildStages ->
+        if (config.printBuildStages) {
             commandWithFeedback("Build stages...") {
-                fileOutput(OUTPUT_BUILD_STAGES, buildStages)
+                fileOutput(OUTPUT_BUILD_STAGES, buildOrder(adjacencyList))
             }
         }
 
