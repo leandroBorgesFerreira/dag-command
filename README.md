@@ -24,7 +24,7 @@ buildscript {
     }
 
     dependencies {
-	    classpath 'com.github.leandroborgesferreira:dag-command:1.1.1'
+	    classpath 'com.github.leandroborgesferreira:dag-command:1.2.2'
     }
 }
 
@@ -49,7 +49,7 @@ buildscript {
     }
     
     dependencies {
-    	classpath("com.github.leandroborgesferreira:dag-command:1.1.1")
+    	classpath("com.github.leandroborgesferreira:dag-command:1.2.2")
     }
 }
 
