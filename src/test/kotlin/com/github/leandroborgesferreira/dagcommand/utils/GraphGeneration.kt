@@ -32,5 +32,6 @@ fun disconnectedGraph(): Map<String, Set<String>> =
         "B" to emptySet(),
         "C" to emptySet(),
         "D" to emptySet(),
+        "E" to emptySet(),
         "F" to emptySet()
     )
