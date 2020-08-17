@@ -4,12 +4,14 @@ import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 import com.github.leandroborgesferreira.dagcommand.domain.ModuleBuildStage
 import java.util.*
 
-fun affectedModules(adjacencyList: AdjacencyList, modules: List<String>): Set<String> {
+fun affectedModules(adjacencyList: AdjacencyList, changedFolders: List<String>): Set<String> {
     val resultSet: MutableSet<String> = mutableSetOf()
 
-    modules.forEach { module ->
-        traverseGraph(adjacencyList, module, resultSet)
-    }
+    changedFolders
+        .filter { folder -> adjacencyList.keys.contains(folder) }
+        .forEach { module ->
+            traverseGraph(adjacencyList, module, resultSet)
+        }
 
     return resultSet
 }
