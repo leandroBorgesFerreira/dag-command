@@ -75,9 +75,10 @@ open class CommandTask : DefaultTask() {
             }
         }
 
-        val changedModules: List<String> = changedModules(CommandExec, config.defaultBranch).also { modules ->
-            println("Changed modules: ${modules.joinToString()}\n")
-        }
+        val changedModules: List<String> =
+            changedModules(CommandExec, config.defaultBranch, adjacencyList).also { modules ->
+                println("Changed modules: ${modules.joinToString()}\n")
+            }
 
         val affectedModules: Set<String> = affectedModules(adjacencyList, changedModules).also { modules ->
             println("Affected modules: ${modules.joinToString()}\n")
