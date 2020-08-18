@@ -1,6 +1,6 @@
 package com.github.leandroborgesferreira.dagcommand.logic
 
-import com.github.leandroborgesferreira.dagcommand.domain.ModuleBuildStage
+import com.github.leandroborgesferreira.dagcommand.domain.Node
 import com.github.leandroborgesferreira.dagcommand.utils.disconnectedGraph
 import com.github.leandroborgesferreira.dagcommand.utils.simpleGraph
 import org.junit.Test
@@ -51,14 +51,15 @@ class GraphKtTest {
 
     @Test
     fun `proves that build stage can be correctly found`() {
-        val expected = mapOf(
-            0 to listOf("A"),
-            1 to listOf("B", "D"),
-            2 to listOf("C"),
-            3 to listOf("E"),
-            4 to listOf("F")
+        val expected = listOf(
+            Node("A", 0),
+            Node("B", 1),
+            Node("C", 2),
+            Node("D", 1),
+            Node("E", 3),
+            Node("F", 4)
         )
 
-        assertEquals(expected, buildOrder(simpleGraph()))
+        assertEquals(expected, nodeList(simpleGraph()))
     }
 }
