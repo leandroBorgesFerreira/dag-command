@@ -7,5 +7,5 @@ open class CommandExtension(
     var outputPath: String? = null,
     var printAdjacencyList: Boolean = true,
     var printEdgesList: Boolean = true,
-    var printBuildStages: Boolean = true
+    var printNodesList: Boolean = true
 )
