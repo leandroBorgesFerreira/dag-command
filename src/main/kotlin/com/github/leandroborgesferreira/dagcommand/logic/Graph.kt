@@ -2,10 +2,10 @@ package com.github.leandroborgesferreira.dagcommand.logic
 
 import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 
-fun affectedModules(adjacencyList: AdjacencyList, changedFolders: List<String>): Set<String> {
+fun affectedModules(adjacencyList: AdjacencyList, changedModules: List<String>): Set<String> {
     val resultSet: MutableSet<String> = mutableSetOf()
 
-    changedFolders
+    changedModules
         .forEach { module ->
             traverseGraph(adjacencyList, module, resultSet)
         }

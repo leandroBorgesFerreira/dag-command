@@ -9,13 +9,6 @@ import kotlin.test.assertEquals
 class GraphKtTest {
 
     @Test
-    fun `proves that affected modules do not include folders that are not modules`() {
-        val resultSet = affectedModules(simpleGraph(), listOf("B", "C", "not", "in", "the", "graph"))
-
-        assertEquals(setOf("B", "C", "E", "F"), resultSet)
-    }
-
-    @Test
     fun `proves that affected graph works for middle position change`() {
         val resultSet = affectedModules(simpleGraph(), listOf("B", "C"))
 
