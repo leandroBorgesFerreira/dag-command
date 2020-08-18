@@ -6,7 +6,6 @@ fun affectedModules(adjacencyList: AdjacencyList, changedFolders: List<String>):
     val resultSet: MutableSet<String> = mutableSetOf()
 
     changedFolders
-        .filter { folder -> adjacencyList.keys.contains(folder) }
         .forEach { module ->
             traverseGraph(adjacencyList, module, resultSet)
         }
