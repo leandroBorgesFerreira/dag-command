@@ -45,14 +45,14 @@ class GraphKtTest {
     @Test
     fun `proves that build stage can be correctly found`() {
         val expected = listOf(
-            Node("A", 0),
-            Node("B", 1),
-            Node("C", 2),
-            Node("D", 1),
-            Node("E", 3),
-            Node("F", 4)
+            Node("A", 0, 0.0),
+            Node("B", 1, 1.0/6.0),
+            Node("C", 2, 2.0/6.0),
+            Node("D", 1, 1.0/6.0),
+            Node("E", 3, 2.0/6.0),
+            Node("F", 4, 4.0/6.0)
         )
 
-        assertEquals(expected, nodeList(simpleGraph()))
+        assertEquals(expected, nodesData(simpleGraph()))
     }
 }
