@@ -5,7 +5,6 @@ import com.github.leandroborgesferreira.dagcommand.csv.toPrintableCsv
 import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 import com.github.leandroborgesferreira.dagcommand.domain.Config
 import com.github.leandroborgesferreira.dagcommand.domain.GraphInformation
-import com.github.leandroborgesferreira.dagcommand.domain.Node
 import com.github.leandroborgesferreira.dagcommand.enums.OutputType
 import com.github.leandroborgesferreira.dagcommand.logic.*
 import com.github.leandroborgesferreira.dagcommand.output.writeToFile
@@ -32,48 +31,36 @@ open class CommandTask : DefaultTask() {
     private fun command() {
         printConfig(project, config)
 
-        val adjacencyList: AdjacencyList = parseAdjacencyList(project, config).also {
-            if (config.printAdjacencyList) {
-                commandWithFeedback("Writing adjacency list...") {
-                    when (config.outputType) {
-                        OutputType.JSON -> {
-                            jsonOutput(OUTPUT_GRAPH, it)
-                        }
-                        OutputType.CSV -> {
-                            jsonOutput(OUTPUT_GRAPH, it) //There's still not CSV support for adjacency list
-                        }
-                    }
+        val adjacencyList: AdjacencyList = parseAdjacencyList(project, config)
+
+        if (config.printGraphInfo) {
+            commandWithFeedback("Writing adjacency list...") {
+                when (config.outputType) {
+                    OutputType.JSON -> jsonOutput(OUTPUT_GRAPH, adjacencyList)
+                    OutputType.CSV -> jsonOutput(OUTPUT_GRAPH, adjacencyList) //There's still not CSV support for adjacency list
                 }
             }
-        }
 
-        if (config.printEdgesList) {
             commandWithFeedback("Writing edges list...") {
                 val edgeList = createEdgeList(adjacencyList)
 
                 when (config.outputType) {
-                    OutputType.JSON -> {
-                        jsonOutput(OUTPUT_EDGE_LIST, edgeList)
-                    }
-                    OutputType.CSV -> {
-                        csvOutput(OUTPUT_EDGE_LIST, edgeList.toPrintableCsv())
-                    }
+                    OutputType.JSON -> jsonOutput(OUTPUT_EDGE_LIST, edgeList)
+                    OutputType.CSV -> csvOutput(OUTPUT_EDGE_LIST, edgeList.toPrintableCsv())
                 }
             }
-        }
 
-        if (config.printNodesList) {
             commandWithFeedback("Build stages...") {
                 val nodeList = nodesData(adjacencyList)
 
                 when (config.outputType) {
-                    OutputType.JSON -> {
-                        jsonOutput(OUTPUT_NODE_LIST, nodeList)
-                    }
-                    OutputType.CSV -> {
-                        csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
-                    }
+                    OutputType.JSON -> jsonOutput(OUTPUT_NODE_LIST, nodeList)
+                    OutputType.CSV -> csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
                 }
+            }
+
+            if (config.printGraphInfo) {
+                generalInformation(adjacencyList).let(::printGraphInfo)
             }
         }
 
@@ -89,10 +76,6 @@ open class CommandTask : DefaultTask() {
         when (config.outputType) {
             OutputType.JSON -> jsonOutput(OUTPUT_FILE_NAME_AFFECTED, affectedModules)
             OutputType.CSV -> csvOutput(OUTPUT_FILE_NAME_AFFECTED, affectedModules.addHeader("Module"))
-        }
-
-        if (config.printGraphInfo) {
-            generalInformation(adjacencyList).let(::printGraphInfo)
         }
     }
 
@@ -139,4 +122,3 @@ private fun printGraphInfo(information: GraphInformation) {
 }
 
 fun Iterable<String>.addHeader(header: String) = listOf(header) + this
-

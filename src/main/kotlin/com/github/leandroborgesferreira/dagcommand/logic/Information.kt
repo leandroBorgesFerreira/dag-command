@@ -1,15 +1,18 @@
 package com.github.leandroborgesferreira.dagcommand.logic
 
 import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
+import com.github.leandroborgesferreira.dagcommand.domain.Edge
 import com.github.leandroborgesferreira.dagcommand.domain.GraphInformation
 import com.github.leandroborgesferreira.dagcommand.domain.Node
 
-fun generalInformation(adjacencyList: AdjacencyList): GraphInformation {
-    val nodeList: List<Node> = nodeList(adjacencyList)
-
+fun generalInformation(
+    adjacencyList: AdjacencyList,
+    nodeList: List<Node> = nodesData(adjacencyList),
+    edgeList: List<Edge> = createEdgeList(adjacencyList)
+): GraphInformation {
     return GraphInformation(
         nodeCount = nodeList.size,
-        edgeCount = createEdgeList(adjacencyList).size,
+        edgeCount = edgeList.size,
         buildStages = buildStageCount(nodeList),
         buildCoefficient = buildCoefficient(nodeList)
     )
