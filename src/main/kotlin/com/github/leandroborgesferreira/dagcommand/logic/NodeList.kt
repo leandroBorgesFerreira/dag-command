@@ -2,29 +2,34 @@ package com.github.leandroborgesferreira.dagcommand.logic
 
 import com.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 import com.github.leandroborgesferreira.dagcommand.domain.Node
-import com.github.leandroborgesferreira.dagcommand.domain.toNodeName
-import java.util.LinkedList
-import java.util.Queue
+import java.util.*
 
 fun findRootNodes(adjacencyList: AdjacencyList) = adjacencyList.keys - adjacencyList.values.flatten()
 
-fun nodeList(adjacencyList: AdjacencyList): List<Node> {
+fun nodesData(adjacencyList: AdjacencyList): List<Node> {
     val edges = createEdgeList(adjacencyList)
+    val nodeList: List<Node> = adjacencyList.keys.map { module ->
+        Node(name = module, buildStage = 0, instability = calculateInstability(module, edges, adjacencyList.keys.size))
+    }
+
+    return calculateBuildStages(nodeList, adjacencyList)
+}
+
+fun List<Node>.groupByStages(): Map<Int, List<String>> =
+    groupBy { buildStage ->
+        buildStage.buildStage
+    }.mapValues { (_, stageList) ->
+        stageList.map { it.name }
+    }.toSortedMap()
+
+private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyList): List<Node> {
     val modulesQueue: Queue<String> = LinkedList<String>().apply {
         addAll(findRootNodes(adjacencyList))
     }
 
     var currentStage = 0
-    val moduleWithStage: List<Node> = adjacencyList.keys.map { module ->
-        Node(
-                name = module,
-                buildStage = 0,
-                instability = edges.calculateInstabiltyForNode(node = module.toNodeName())
-        )
-    }
-
     while (modulesQueue.isNotEmpty()) {
-        moduleWithStage.filter { (module, _) ->
+        nodeList.filter { (module, _) ->
             modulesQueue.contains(module)
         }.forEach { moduleBuildStage ->
             moduleBuildStage.buildStage = currentStage
@@ -39,12 +44,5 @@ fun nodeList(adjacencyList: AdjacencyList): List<Node> {
         currentStage++
     }
 
-    return moduleWithStage
+    return nodeList
 }
-
-fun List<Node>.groupByStages(): Map<Int, List<String>> =
-        groupBy { buildStage ->
-            buildStage.buildStage
-        }.mapValues { (_, stageList) ->
-            stageList.map { it.name }
-        }.toSortedMap()
