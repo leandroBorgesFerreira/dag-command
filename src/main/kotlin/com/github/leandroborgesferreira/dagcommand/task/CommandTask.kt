@@ -33,7 +33,7 @@ open class CommandTask : DefaultTask() {
 
         val adjacencyList: AdjacencyList = parseAdjacencyList(project, config)
 
-        if (config.printGraphInfo) {
+        if (config.printModulesInfo) {
             commandWithFeedback("Writing adjacency list...") {
                 when (config.outputType) {
                     OutputType.JSON -> jsonOutput(OUTPUT_GRAPH, adjacencyList)
@@ -59,7 +59,7 @@ open class CommandTask : DefaultTask() {
                 }
             }
 
-            if (config.printGraphInfo) {
+            if (config.printModulesInfo) {
                 generalInformation(adjacencyList).let(::printGraphInfo)
             }
         }

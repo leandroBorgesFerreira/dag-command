@@ -5,8 +5,5 @@ open class CommandExtension(
     var defaultBranch: String = "master",
     var outputType: String = "console",
     var outputPath: String? = null,
-    var printAdjacencyList: Boolean = true,
-    var printEdgesList: Boolean = true,
-    var printNodesList: Boolean = true,
-    val printGraphInfo: Boolean = true
+    val printModulesInfo: Boolean = true
 )
