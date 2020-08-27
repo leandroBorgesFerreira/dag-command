@@ -5,5 +5,5 @@ open class CommandExtension(
     var defaultBranch: String = "master",
     var outputType: String = "console",
     var outputPath: String? = null,
-    val printModulesInfo: Boolean = true
+    var printModulesInfo: Boolean = true
 )
