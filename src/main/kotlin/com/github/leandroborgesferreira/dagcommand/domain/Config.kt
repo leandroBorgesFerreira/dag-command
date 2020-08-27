@@ -8,7 +8,5 @@ data class Config(
     val defaultBranch: String,
     val outputType: OutputType,
     val outputPath: String?,
-    val printAdjacencyList: Boolean,
-    val printEdgesList: Boolean,
-    val printNodesList: Boolean
+    val printGraphInfo: Boolean
 )

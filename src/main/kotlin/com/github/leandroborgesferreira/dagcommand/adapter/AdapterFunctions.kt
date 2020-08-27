@@ -11,9 +11,7 @@ fun CommandExtension.parse(): Config =
         defaultBranch = defaultBranch,
         outputType = findOutputType(outputType),
         outputPath = outputPath,
-        printAdjacencyList = printAdjacencyList,
-        printEdgesList = printEdgesList,
-        printNodesList = printNodesList
+        printGraphInfo = printGraphInfo
     )
 
 private fun findFilter(filter: String): ModuleType =
