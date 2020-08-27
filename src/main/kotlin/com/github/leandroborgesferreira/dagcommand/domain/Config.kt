@@ -10,5 +10,6 @@ data class Config(
     val outputPath: String?,
     val printAdjacencyList: Boolean,
     val printEdgesList: Boolean,
-    val printNodesList: Boolean
+    val printNodesList: Boolean,
+    val printGraphInfo: Boolean
 )

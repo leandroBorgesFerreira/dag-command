@@ -13,7 +13,8 @@ fun CommandExtension.parse(): Config =
         outputPath = outputPath,
         printAdjacencyList = printAdjacencyList,
         printEdgesList = printEdgesList,
-        printNodesList = printNodesList
+        printNodesList = printNodesList,
+        printGraphInfo = printGraphInfo
     )
 
 private fun findFilter(filter: String): ModuleType =
