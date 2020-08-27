@@ -64,7 +64,7 @@ open class CommandTask : DefaultTask() {
 
         if (config.printNodesList) {
             commandWithFeedback("Build stages...") {
-                val nodeList = nodeList(adjacencyList)
+                val nodeList = nodesData(adjacencyList)
 
                 when (config.outputType) {
                     OutputType.JSON -> {

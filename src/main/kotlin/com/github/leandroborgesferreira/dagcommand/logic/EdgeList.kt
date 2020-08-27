@@ -11,3 +11,4 @@ fun createEdgeList(adjacencyList: AdjacencyList): List<Edge> =
             Edge(source, targetName, 1)
         }
     }
+
