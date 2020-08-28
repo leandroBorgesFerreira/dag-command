@@ -24,7 +24,7 @@ buildscript {
     }
 
     dependencies {
-	    classpath 'com.github.leandroborgesferreira:dag-command:1.2.2'
+	    classpath 'com.github.leandroborgesferreira:dag-command:1.5.2'
     }
 }
 
@@ -32,8 +32,9 @@ apply plugin: 'com.github.leandroborgesferreira.dag-command'
 
 dagCommand {
     filter = "all"
-    defaultBranch = "develop"
-    outputType = "file"
+    defaultBranch = "origin/develop"
+    outputType = "json"
+    printModulesInfo = true
 }
 ```
 
@@ -49,7 +50,7 @@ buildscript {
     }
     
     dependencies {
-    	classpath("com.github.leandroborgesferreira:dag-command:1.2.2")
+    	classpath("com.github.leandroborgesferreira:dag-command:1.5.2")
     }
 }
 
@@ -59,8 +60,7 @@ the<CommandExtension>().run {
     this.filter = "all"
     this.defaultBranch = "master"
     this.outputType = "file"
-    this.printAdjacencyList = true
-    this.printEdgesList = true
+    this.printModulesInfo = true
 }
 ```
 
@@ -73,5 +73,5 @@ Run the task:
 ./gradlew dag-command
 ```
 
-New files will be create inside `./build/dag-command` you will be able to find the adjacency list of your modules, the edge list and the affected modules. 
+New files will be create inside `./build/dag-command` you will be able to find the adjacency list, node list (with information about the nodes) and edge list of your modules, the edge list and the affected modules. 
 
