@@ -75,6 +75,20 @@ Run the task:
 
 New files will be create inside `./build/dag-command` you will be able to find the adjacency list, node list (with information about the nodes) and edge list of your modules, the edge list and the affected modules. 
 
+## Configuration
+
+#### filter
+You can filter between library, app, or all (which include both). 
+
+#### defaultBranch
+The default branch of your project. This is needed for this plugin to calculate the changes on your PR and which modules were affected by then. 
+
+#### outputType
+The type of the files generated. You can choose between `json` or `csv`.
+
+#### printModulesInfo
+Print the information in files. You can choose to disable this functionally to speed up a bit the execution of this plugin (only necessary for really big projects, you most likelly can leave this as `true`.)
+
 ## Calculation of the PR changes
 It is important to understand how the PR change calculation works. Basically this pluggin runs: 
 
