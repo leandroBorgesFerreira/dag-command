@@ -33,4 +33,7 @@ private fun Project.parseDependencies(): List<Project> =
                 .map { projectDependency ->
                     projectDependency.dependencyProject
                 }
+                .filterNot { dependencyProject ->
+                  project.name == dependencyProject.name
+                }
         }

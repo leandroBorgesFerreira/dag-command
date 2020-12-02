@@ -1,5 +1,5 @@
 val artifactIdVal = "dag-command"
-val versionVal = "1.5.2"
+val versionVal = "1.5.3"
 val publicationName="dagCommand"
 
 group = "com.github.leandroborgesferreira"
