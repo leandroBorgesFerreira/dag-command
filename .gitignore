@@ -11,4 +11,5 @@ out
 .DS_Store
 
 gradle.properties
+local.properties
 secret-ring.gpg
