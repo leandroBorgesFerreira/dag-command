@@ -29,6 +29,7 @@ private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyL
 
     var currentStage = 0
     while (modulesQueue.isNotEmpty() && currentStage < 100) {
+        print("Current stage: $currentStage")
         nodeList.filter { (module, _) ->
             modulesQueue.contains(module)
         }.forEach { moduleBuildStage ->
@@ -38,6 +39,9 @@ private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyL
         val modulesOfNextLevel = modulesQueue.mapNotNull { module ->
             adjacencyList[module]
         }.reduce { acc, set -> acc + set }
+
+        println("--- \n\n current level: ${modulesQueue.joinToString()} ")
+        println("--- adding next level: ${modulesOfNextLevel.joinToString()} --- \n\n ")
 
         modulesQueue.clear()
         modulesQueue.addAll(modulesOfNextLevel)
