@@ -32,7 +32,6 @@ java {
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
@@ -108,7 +107,7 @@ publishing {
         }
     }
 }
-//
-//signing {
-//    sign(publishing.publications[publicationName])
-//}
+
+signing {
+    sign(publishing.publications[publicationName])
+}
