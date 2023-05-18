@@ -53,6 +53,8 @@ class GraphKtTest {
             Node("F", 4, 4.0/6.0)
         )
 
-        assertEquals(expected, nodesData(simpleGraph()))
+        val result = nodesData(simpleGraph())
+
+        assertEquals(expected, result)
     }
 }

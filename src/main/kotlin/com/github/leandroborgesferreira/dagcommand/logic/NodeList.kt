@@ -22,6 +22,10 @@ fun List<Node>.groupByStages(): Map<Int, List<String>> =
         stageList.map { it.name }
     }.toSortedMap()
 
+/**
+ * Todo: I need to use a topological sort here to properly calculate the phases of compilation. Right now this
+ * algorithm is providing a wrong solution =|
+ */
 private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyList): List<Node> {
     val modulesQueue: Queue<String> = LinkedList<String>().apply {
         addAll(findRootNodes(adjacencyList))
@@ -42,9 +46,10 @@ private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyL
         // Now, go to the next stage of the dag for each module.
         val modulesOfNextLevel = modulesQueue
             .filter { module -> !expandedNodes.contains(module) }
-            .mapNotNull { module ->
-            adjacencyList[module]
-        }.reduce { acc, set -> acc + set }
+            .mapNotNull { module -> adjacencyList[module] }
+            .takeIf { it.isNotEmpty() }
+            ?.reduce { acc, set -> acc + set }
+            ?: emptySet()
 
         expandedNodes.addAll(modulesQueue)
 
@@ -53,8 +58,10 @@ private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyL
         currentStage++
 
         if (currentStage >= 100) {
-            throw IllegalStateException("The build stage hit the 100 stage looks like the library hit a loop while " +
-                    "traversing the graph of dependencies.")
+            throw IllegalStateException(
+                "The build stage hit the 100 stage looks like the library hit a loop while " +
+                        "traversing the graph of dependencies."
+            )
         }
     }
 

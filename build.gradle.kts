@@ -111,3 +111,5 @@ publishing {
 signing {
     sign(publishing.publications[publicationName])
 }
+
+tasks.withType<Copy>().all { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
