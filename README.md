@@ -59,7 +59,7 @@ apply<DagCommandPlugin>()
 the<CommandExtension>().run {
     this.filter = "all"
     this.defaultBranch = "master"
-    this.outputType = "file"
+    this.outputType = "json"
     this.printModulesInfo = true
 }
 ```
