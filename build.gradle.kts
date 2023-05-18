@@ -9,7 +9,7 @@ fun getNexusUserName(): String? = System.getenv("SONATYPE_NEXUS_USERNAME")
 fun getNexusPassword(): String? = System.getenv("SONATYPE_NEXUS_PASSWORD")
 
 plugins {
-    kotlin("jvm") version ("1.3.72")
+    kotlin("jvm") version "1.8.21"
     id("java-gradle-plugin")
     id("maven-publish")
     signing
@@ -27,13 +27,11 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    testImplementation("org.mockito:mockito-core:3.3.3")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.mockito:mockito-core:5.3.1")
 }
 
 gradlePlugin {

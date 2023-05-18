@@ -1,13 +1,12 @@
 package com.github.leandroborgesferreira.dagcommand.logic
 
-import com.github.leandroborgesferreira.dagcommand.utils.CommandExec
 import com.github.leandroborgesferreira.dagcommand.utils.CommandExecutor
 import com.github.leandroborgesferreira.dagcommand.utils.simpleGraph
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Test
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 
 class ChangedModulesKtTest {
