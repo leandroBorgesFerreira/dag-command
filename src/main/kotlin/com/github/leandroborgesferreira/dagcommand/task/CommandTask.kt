@@ -10,6 +10,7 @@ import com.github.leandroborgesferreira.dagcommand.logic.*
 import com.github.leandroborgesferreira.dagcommand.output.writeToFile
 import com.github.leandroborgesferreira.dagcommand.utils.CommandExec
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
@@ -21,8 +22,9 @@ private const val OUTPUT_FILE_NAME_AFFECTED = "affected-modules"
 private const val OUTPUT_GRAPH = "adjacencies-list"
 private const val OUTPUT_EDGE_LIST = "edge-list"
 private const val OUTPUT_NODE_LIST = "node-list"
+private const val BUILD_STAGES = "build-stages"
 
-open class CommandTask : DefaultTask() {
+abstract class CommandTask : DefaultTask() {
 
     @Input
     lateinit var config: Config
@@ -37,7 +39,10 @@ open class CommandTask : DefaultTask() {
             commandWithFeedback("Writing adjacency list...") {
                 when (config.outputType) {
                     OutputType.JSON -> jsonOutput(OUTPUT_GRAPH, adjacencyList)
-                    OutputType.CSV -> jsonOutput(OUTPUT_GRAPH, adjacencyList) //There's still not CSV support for adjacency list
+                    OutputType.CSV -> jsonOutput(
+                        OUTPUT_GRAPH,
+                        adjacencyList
+                    ) //There's still not CSV support for adjacency list
                 }
             }
 
@@ -54,10 +59,16 @@ open class CommandTask : DefaultTask() {
                 try {
                     commandWithFeedback("Build stages...") {
                         val nodeList = nodesData(adjacencyList)
+                        val buildStages = nodeList.groupByStages()
 
                         when (config.outputType) {
                             OutputType.JSON -> jsonOutput(OUTPUT_NODE_LIST, nodeList)
                             OutputType.CSV -> csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
+                        }
+
+                        when (config.outputType) {
+                            OutputType.JSON -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
+                            OutputType.CSV -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
                         }
                     }
 
@@ -85,11 +96,11 @@ open class CommandTask : DefaultTask() {
 
     private fun buildPath() = config.outputPath ?: project.buildDir.path
 
-    private fun jsonOutput(fileName: String, data: Any) {
+    private fun jsonOutput(fileName: String, data: Any, prettyPrint: Boolean = false) {
         writeToFile(
             File(buildPath(), OUTPUT_DIRECTORY_NAME),
             "$fileName.json",
-            Gson().toJson(data)
+            getGson(prettyPrint).toJson(data)
         )
     }
 
@@ -101,6 +112,13 @@ open class CommandTask : DefaultTask() {
         )
     }
 }
+
+private fun getGson(prettyPrint: Boolean) = GsonBuilder()
+    .apply {
+        if (prettyPrint) {
+            setPrettyPrinting()
+        }
+    }.create()
 
 private fun printConfig(project: Project, config: Config) {
     println("--- Config ---")
