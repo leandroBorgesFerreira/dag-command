@@ -9,8 +9,7 @@ import org.gradle.api.artifacts.ProjectDependency
 fun parseAdjacencyList(project: Project, config: Config): Map<String, Set<String>> =
     project.subprojects
         .filter { subProject -> subProject.isModuleType(config.filter) }
-        .map { subProject -> subProject.name to subProject.parseDependencies().map { dep -> dep.name }.toSet() }
-        .toMap()
+        .associate { subProject -> subProject.name to subProject.parseDependencies().map { dep -> dep.name }.toSet() }
         .let(::revertAdjacencyList)
 
 private fun Project.isModuleType(moduleType: ModuleType): Boolean {
@@ -30,10 +29,6 @@ private fun Project.parseDependencies(): List<Project> =
             configuration
                 .dependencies
                 .withType(ProjectDependency::class.java)
-                .map { projectDependency ->
-                    projectDependency.dependencyProject
-                }
-                .filterNot { dependencyProject ->
-                  project.name == dependencyProject.name
-                }
+                .map { projectDependency -> projectDependency.dependencyProject }
+                .filterNot { dependencyProject -> project.name == dependencyProject.name }
         }
