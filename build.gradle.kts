@@ -1,5 +1,5 @@
 val artifactIdVal = "dag-command"
-val versionVal = "1.5.3"
+val versionVal = "1.6.0"
 val publicationName="dagCommand"
 
 group = "com.github.leandroborgesferreira"
@@ -24,6 +24,7 @@ java {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -85,7 +86,6 @@ publishing {
             }
         }
     }
-
     repositories {
         maven {
             credentials {
@@ -100,7 +100,7 @@ publishing {
         }
     }
 }
-
-signing {
-    sign(publishing.publications[publicationName])
-}
+//
+//signing {
+//    sign(publishing.publications[publicationName])
+//}

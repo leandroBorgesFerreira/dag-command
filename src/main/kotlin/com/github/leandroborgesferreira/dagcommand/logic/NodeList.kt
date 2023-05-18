@@ -28,7 +28,7 @@ private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyL
     }
 
     var currentStage = 0
-    while (modulesQueue.isNotEmpty()) {
+    while (modulesQueue.isNotEmpty() && currentStage < 100) {
         nodeList.filter { (module, _) ->
             modulesQueue.contains(module)
         }.forEach { moduleBuildStage ->
@@ -42,6 +42,10 @@ private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyL
         modulesQueue.clear()
         modulesQueue.addAll(modulesOfNextLevel)
         currentStage++
+    }
+
+    if (currentStage == 100) {
+        println("Something when wrong when calculating the build stages of this project")
     }
 
     return nodeList
