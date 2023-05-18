@@ -50,17 +50,21 @@ open class CommandTask : DefaultTask() {
                 }
             }
 
-            commandWithFeedback("Build stages...") {
-                val nodeList = nodesData(adjacencyList)
-
-                when (config.outputType) {
-                    OutputType.JSON -> jsonOutput(OUTPUT_NODE_LIST, nodeList)
-                    OutputType.CSV -> csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
-                }
-            }
-
             if (config.printModulesInfo) {
-                generalInformation(adjacencyList).let(::printGraphInfo)
+                try {
+                    commandWithFeedback("Build stages...") {
+                        val nodeList = nodesData(adjacencyList)
+
+                        when (config.outputType) {
+                            OutputType.JSON -> jsonOutput(OUTPUT_NODE_LIST, nodeList)
+                            OutputType.CSV -> csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
+                        }
+                    }
+
+                    generalInformation(adjacencyList).let(::printGraphInfo)
+                } catch (e: IllegalStateException) {
+                    println("A problem happened when calculating the information about the modules, skipping it.")
+                }
             }
         }
 
