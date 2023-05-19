@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+import java.io.FileInputStream
+
 val artifactIdVal = "dag-command"
 val versionVal = "1.6.0"
-val publicationName="dagCommand"
+val publicationName = "dagCommand"
 
 group = "com.github.leandroborgesferreira"
 version = versionVal
@@ -16,7 +19,7 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
-apply(from ="${rootDir}/scripts/publish-root.gradle")
+apply(from = "${rootDir}/scripts/publish-root.gradle")
 
 sourceSets {
     test {
@@ -105,10 +108,14 @@ publishing {
 }
 
 signing {
+    val prop = Properties().apply {
+        load(FileInputStream(File(rootProject.rootDir, "local.properties")))
+    }
+
     useInMemoryPgpKeys(
-        rootProject.ext["signing.keyId"] as String,
-        rootProject.ext["signing.key"] as String,
-        rootProject.ext["signing.password"] as String,
+        System.getenv("SIGNING_KEY_ID") ?: prop.getProperty("signing.keyId") as String,
+        System.getenv("SIGNING_KEY") ?: prop.getProperty("signing.key") as String,
+        System.getenv("SIGNING_PASSWORD") ?: prop.getProperty("signing.password"),
     )
     sign(publishing.publications[publicationName])
 }
