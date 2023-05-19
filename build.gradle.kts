@@ -2,10 +2,11 @@ import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
 val artifactIdVal = "dag-command"
-val versionVal = "1.6.0"
+val versionVal = "1.7.0"
 val publicationName = "dagCommand"
 
-group = "com.github.leandroborgesferreira"
+group = "io.github.leandroborgesferreira"
+val groupMaven = "com.github.leandroborgesferreira"
 version = versionVal
 
 fun getNexusUserName(): String? = System.getenv("SONATYPE_NEXUS_USERNAME")
@@ -17,6 +18,7 @@ plugins {
     signing
     `maven-publish`
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id("com.gradle.plugin-publish") version "1.2.0"
 }
 
 apply(from = "${rootDir}/scripts/publish-root.gradle")
@@ -47,12 +49,16 @@ dependencies {
 }
 
 gradlePlugin {
+    website.set("https://github.com/leandroBorgesFerreira/dag-command/")
+    vcsUrl.set("https://github.com/leandroBorgesFerreira/dag-command/")
+
     plugins {
         register(rootProject.name) {
             id = "$group.$artifactIdVal"
             displayName = "Unit tests following the DAG"
             description = "Unit tests only the changed modules in the dependencies graph"
             implementationClass = "$group.dagcommand.DagCommandPlugin"
+            tags.set(listOf("testing", "tooling", "multi-module"))
         }
     }
 }
@@ -60,7 +66,7 @@ gradlePlugin {
 publishing {
     publications {
         create<MavenPublication>(publicationName) {
-            groupId = group.toString()
+            groupId = groupMaven
             artifactId = artifactIdVal
             version = versionVal
 
