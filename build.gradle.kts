@@ -11,10 +11,9 @@ fun getNexusPassword(): String? = System.getenv("SONATYPE_NEXUS_PASSWORD")
 plugins {
     kotlin("jvm") version "1.8.21"
     id("java-gradle-plugin")
-    id("maven-publish")
     signing
     `maven-publish`
-    id("io.codearte.nexus-staging") version ("0.21.2")
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 sourceSets {
@@ -53,9 +52,13 @@ gradlePlugin {
     }
 }
 
-nexusStaging {
-    username = getNexusUserName()
-    password = getNexusPassword()
+nexusPublishing {
+    repositories {
+        create("dagCommandNexus") {
+            username.set(getNexusUserName()) // defaults to project.properties["myNexusUsername"]
+            password.set(getNexusPassword()) // defaults to project.properties["myNexusPassword"]
+        }
+    }
 }
 
 publishing {
@@ -109,6 +112,11 @@ publishing {
 }
 
 signing {
+    useInMemoryPgpKeys(
+        System.getenv("SIGNING_KEY_ID"),
+        System.getenv("SIGNING_KEY"),
+        System.getenv("SIGNING_PASSWORD"),
+    )
     sign(publishing.publications[publicationName])
 }
 
