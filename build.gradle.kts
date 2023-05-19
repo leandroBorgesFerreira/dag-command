@@ -108,11 +108,24 @@ publishing {
 }
 
 signing {
-    useInMemoryPgpKeys(
-        System.getenv("SIGNING_KEY_ID"),
-        System.getenv("SIGNING_KEY"),
-        System.getenv("SIGNING_PASSWORD"),
-    )
+    val secretPropsFile: File = project.rootProject.file("local.properties")
+
+    if (secretPropsFile.exists()) {
+        val prop = Properties().apply {
+            load(FileInputStream(secretPropsFile))
+        }
+        useInMemoryPgpKeys(
+            prop.getProperty("signing.keyId"),
+            prop.getProperty("signing.key"),
+            prop.getProperty("signing.password"),
+        )
+    } else {
+        useInMemoryPgpKeys(
+            System.getenv("SIGNING_KEY_ID"),
+            System.getenv("SIGNING_KEY"),
+            System.getenv("SIGNING_PASSWORD"),
+        )
+    }
 
     sign(publishing.publications[publicationName])
 }
