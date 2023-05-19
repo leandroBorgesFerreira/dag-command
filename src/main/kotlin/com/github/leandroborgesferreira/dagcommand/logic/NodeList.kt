@@ -7,12 +7,25 @@ import java.util.*
 fun findRootNodes(adjacencyList: AdjacencyList) = adjacencyList.keys - adjacencyList.values.flatten().toSet()
 
 fun nodesData(adjacencyList: AdjacencyList): List<Node> {
+    val totalModules = adjacencyList.keys.size
     val edges = createEdgeList(adjacencyList)
+    val moduleToInstability = adjacencyList.keys.associateWith { module ->
+        calculateInstability(module, edges, totalModules)
+    }
+    val phasesMap = compilePhases(adjacencyList).mapIndexed { i, modulesInPhase ->
+        i to modulesInPhase
+    }.toMap()
+    val moduleToPhase = reversePhasesMap(phasesMap)
+
     val nodeList: List<Node> = adjacencyList.keys.map { module ->
-        Node(name = module, buildStage = 0, instability = calculateInstability(module, edges, adjacencyList.keys.size))
+        Node(
+            name = module,
+            buildStage = moduleToPhase[module]!!,
+            instability = moduleToInstability[module]!!
+        )
     }
 
-    return calculateBuildStages(nodeList, adjacencyList)
+    return nodeList
 }
 
 fun List<Node>.groupByStages(): Map<Int, List<String>> =
@@ -22,48 +35,7 @@ fun List<Node>.groupByStages(): Map<Int, List<String>> =
         stageList.map { it.name }
     }.toSortedMap()
 
-/**
- * Todo: I need to use a topological sort here to properly calculate the phases of compilation. Right now this
- * algorithm is providing a wrong solution =|
- */
-private fun calculateBuildStages(nodeList: List<Node>, adjacencyList: AdjacencyList): List<Node> {
-    val modulesQueue: Queue<String> = LinkedList<String>().apply {
-        addAll(findRootNodes(adjacencyList))
-    }
-
-    val expandedNodes = mutableSetOf<String>()
-
-    var currentStage = 0
-
-    while (modulesQueue.isNotEmpty()) {
-        /* First takes all the modules in the current stage and write their build stage */
-        nodeList.filter { (module, _) ->
-            modulesQueue.contains(module)
-        }.forEach { moduleBuildStage ->
-            moduleBuildStage.buildStage = currentStage
-        }
-
-        // Now, go to the next stage of the dag for each module.
-        val modulesOfNextLevel = modulesQueue
-            .filter { module -> !expandedNodes.contains(module) }
-            .mapNotNull { module -> adjacencyList[module] }
-            .takeIf { it.isNotEmpty() }
-            ?.reduce { acc, set -> acc + set }
-            ?: emptySet()
-
-        expandedNodes.addAll(modulesQueue)
-
-        modulesQueue.clear()
-        modulesQueue.addAll(modulesOfNextLevel)
-        currentStage++
-
-        if (currentStage >= 100) {
-            throw IllegalStateException(
-                "The build stage hit the 100 stage looks like the library hit a loop while " +
-                        "traversing the graph of dependencies."
-            )
-        }
-    }
-
-    return nodeList
-}
+private fun reversePhasesMap(phasesMap: Map<Int, Set<String>>): Map<String, Int> =
+    phasesMap
+        .flatMap { (key, values) -> values.map { it to key } }
+        .associateBy({ it.first }, { it.second })

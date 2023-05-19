@@ -6,9 +6,7 @@ import com.google.gson.reflect.TypeToken
 import org.junit.Test
 import java.io.InputStreamReader
 
-
 class NodeListKtTest {
-
 
     @Test
     fun `it should be possible to parse a complex adjacency list into into a node list`() {

@@ -46,37 +46,30 @@ abstract class CommandTask : DefaultTask() {
                 }
             }
 
+            val edgeList = createEdgeList(adjacencyList)
             commandWithFeedback("Writing edges list...") {
-                val edgeList = createEdgeList(adjacencyList)
-
                 when (config.outputType) {
                     OutputType.JSON -> jsonOutput(OUTPUT_EDGE_LIST, edgeList)
                     OutputType.CSV -> csvOutput(OUTPUT_EDGE_LIST, edgeList.toPrintableCsv())
                 }
             }
 
-            if (config.printModulesInfo) {
-                try {
-                    commandWithFeedback("Build stages...") {
-                        val nodeList = nodesData(adjacencyList)
-                        val buildStages = nodeList.groupByStages()
+            val nodeList = nodesData(adjacencyList)
+            commandWithFeedback("Build stages...") {
+                val buildStages = nodeList.groupByStages()
 
-                        when (config.outputType) {
-                            OutputType.JSON -> jsonOutput(OUTPUT_NODE_LIST, nodeList)
-                            OutputType.CSV -> csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
-                        }
+                when (config.outputType) {
+                    OutputType.JSON -> jsonOutput(OUTPUT_NODE_LIST, nodeList)
+                    OutputType.CSV -> csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
+                }
 
-                        when (config.outputType) {
-                            OutputType.JSON -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
-                            OutputType.CSV -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
-                        }
-                    }
-
-                    generalInformation(adjacencyList).let(::printGraphInfo)
-                } catch (e: IllegalStateException) {
-                    println("A problem happened when calculating the information about the modules, skipping it.")
+                when (config.outputType) {
+                    OutputType.JSON -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
+                    OutputType.CSV -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
                 }
             }
+
+            generalInformation(adjacencyList, nodeList = nodeList, edgeList = edgeList).let(::printGraphInfo)
         }
 
         val changedModules: List<String> =
