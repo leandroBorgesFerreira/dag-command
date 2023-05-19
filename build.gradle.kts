@@ -16,6 +16,8 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
+apply(from ="${rootDir}/scripts/publish-root.gradle")
+
 sourceSets {
     test {
         resources {
@@ -48,15 +50,6 @@ gradlePlugin {
             displayName = "Unit tests following the DAG"
             description = "Unit tests only the changed modules in the dependencies graph"
             implementationClass = "$group.dagcommand.DagCommandPlugin"
-        }
-    }
-}
-
-nexusPublishing {
-    repositories {
-        create("dagCommandNexus") {
-            username.set(getNexusUserName()) // defaults to project.properties["myNexusUsername"]
-            password.set(getNexusPassword()) // defaults to project.properties["myNexusPassword"]
         }
     }
 }
@@ -113,9 +106,9 @@ publishing {
 
 signing {
     useInMemoryPgpKeys(
-        System.getenv("SIGNING_KEY_ID"),
-        System.getenv("SIGNING_KEY"),
-        System.getenv("SIGNING_PASSWORD"),
+        rootProject.ext["signing.keyId"] as String,
+        rootProject.ext["signing.key"] as String,
+        rootProject.ext["signing.password"] as String,
     )
     sign(publishing.publications[publicationName])
 }
