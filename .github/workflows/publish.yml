@@ -21,8 +21,8 @@ jobs:
       - name: Publish to MavenCentral
         run: ./gradlew publishDagCommandPublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository --scan
         env:
-          OSSRH_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+          SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+          SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
