@@ -2,11 +2,10 @@ import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
 val artifactIdVal = "dag-command"
-val versionVal = "1.7.0"
+val versionVal = "1.7.1"
 val publicationName = "dagCommand"
 
 group = "io.github.leandroborgesferreira"
-val groupMaven = "com.github.leandroborgesferreira"
 version = versionVal
 
 fun getNexusUserName(): String? = System.getenv("SONATYPE_NEXUS_USERNAME")
@@ -66,7 +65,7 @@ gradlePlugin {
 publishing {
     publications {
         create<MavenPublication>(publicationName) {
-            groupId = groupMaven
+            groupId = group.toString()
             artifactId = artifactIdVal
             version = versionVal
 
