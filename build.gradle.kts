@@ -1,5 +1,5 @@
 val artifactIdVal = "dag-command"
-val versionVal = "1.5.3"
+val versionVal = "1.6.0"
 val publicationName="dagCommand"
 
 group = "com.github.leandroborgesferreira"
@@ -9,12 +9,20 @@ fun getNexusUserName(): String? = System.getenv("SONATYPE_NEXUS_USERNAME")
 fun getNexusPassword(): String? = System.getenv("SONATYPE_NEXUS_PASSWORD")
 
 plugins {
-    kotlin("jvm") version ("1.3.72")
+    kotlin("jvm") version "1.8.21"
     id("java-gradle-plugin")
     id("maven-publish")
     signing
     `maven-publish`
     id("io.codearte.nexus-staging") version ("0.21.2")
+}
+
+sourceSets {
+    test {
+        resources {
+            srcDirs("src/test/resources")
+        }
+    }
 }
 
 java {
@@ -27,13 +35,11 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    testImplementation("org.mockito:mockito-core:3.3.3")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.mockito:mockito-core:5.3.1")
 }
 
 gradlePlugin {
@@ -87,7 +93,6 @@ publishing {
             }
         }
     }
-
     repositories {
         maven {
             credentials {
@@ -106,3 +111,5 @@ publishing {
 signing {
     sign(publishing.publications[publicationName])
 }
+
+tasks.withType<Copy>().all { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }

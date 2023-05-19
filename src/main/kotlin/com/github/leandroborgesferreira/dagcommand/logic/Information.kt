@@ -18,7 +18,7 @@ fun generalInformation(
     )
 }
 
-private fun buildStageCount(nodeList: List<Node>) = nodeList.maxBy { node -> node.buildStage }!!.buildStage
+private fun buildStageCount(nodeList: List<Node>) = nodeList.maxBy { node -> node.buildStage }.buildStage
 
 private fun buildCoefficient(nodeList: List<Node>): Double =
     nodeList.fold(0) { acc, node -> acc + (node.buildStage + 1) } / nodeList.size.toDouble()
