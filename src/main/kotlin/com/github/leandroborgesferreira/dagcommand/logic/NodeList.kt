@@ -20,8 +20,8 @@ fun nodesData(adjacencyList: AdjacencyList): List<Node> {
     val nodeList: List<Node> = adjacencyList.keys.map { module ->
         Node(
             name = module,
-            buildStage = moduleToPhase[module]!!,
-            instability = moduleToInstability[module]!!
+            buildStage = moduleToPhase[module] ?: -1,
+            instability = moduleToInstability[module] ?: -1.0
         )
     }
 
