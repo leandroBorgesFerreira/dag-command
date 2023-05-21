@@ -28,10 +28,6 @@ sourceSets {
     }
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
 
 repositories {
     mavenCentral()
@@ -43,6 +39,14 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
     testImplementation("org.mockito:mockito-core:5.3.1")
+}
+
+tasks.withType<Copy>().all { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
+
+//Publication code. It would be interesting to separate to another script.
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 gradlePlugin {
@@ -119,5 +123,3 @@ signing {
 
     sign(publishing.publications[publicationName])
 }
-
-tasks.withType<Copy>().all { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
