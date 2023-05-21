@@ -62,6 +62,20 @@ the<CommandExtension>().run {
     this.outputType = "json"
     this.printModulesInfo = true
 }
+
+OR the new structure: 
+
+plugins {
+    [...]
+    id("io.github.leandroborgesferreira.dag-command") version "[version]" apply true
+}
+
+dagCommand {
+    filter = "all"
+    defaultBranch = "origin/develop"
+    outputType = "json"
+    printModulesInfo = true
+}
 ```
 
 
