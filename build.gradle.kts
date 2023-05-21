@@ -20,8 +20,6 @@ plugins {
     id("com.gradle.plugin-publish") version "1.2.0"
 }
 
-apply(from = "${rootDir}/scripts/publish-root.gradle")
-
 sourceSets {
     test {
         resources {
@@ -95,19 +93,6 @@ publishing {
                     url.set("https://github.com/leandroBorgesFerreira/dag-command")
                 }
             }
-        }
-    }
-    repositories {
-        maven {
-            credentials {
-                username = getNexusUserName()
-                password = getNexusPassword()
-            }
-
-            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-            val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots")
-
-            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
         }
     }
 }
