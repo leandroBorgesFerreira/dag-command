@@ -2,6 +2,7 @@ package io.github.leandroborgesferreira.dagcommand.logic
 
 import io.github.leandroborgesferreira.dagcommand.domain.Node
 import io.github.leandroborgesferreira.dagcommand.utils.disconnectedGraph
+import io.github.leandroborgesferreira.dagcommand.utils.graphWithCycle
 import io.github.leandroborgesferreira.dagcommand.utils.simpleGraph
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -56,5 +57,10 @@ class GraphKtTest {
         val result = nodesData(simpleGraph())
 
         assertEquals(expected, result)
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun `proves that cycles are detected`() {
+        affectedModules(graphWithCycle(), listOf("A", "B", "C"))
     }
 }

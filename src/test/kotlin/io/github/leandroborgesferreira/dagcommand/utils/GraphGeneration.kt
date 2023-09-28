@@ -12,6 +12,14 @@ fun simpleGraph(): Map<String, Set<String>> =
         "F" to emptySet()
     )
 
+fun graphWithCycle(): Map<String, Set<String>> =
+    mapOf(
+        "A" to setOf("B"),
+        "B" to setOf("C"),
+        "C" to setOf("A"),
+    )
+
+
 fun simpleEdgeList(): List<Edge> =
     listOf(
         Edge("A", "B", 1),
