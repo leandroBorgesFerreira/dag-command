@@ -1,5 +1,5 @@
+![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/io.github.leandroborgesferreira.dag-command) ![Java CI with Gradle](https://github.com/leandroBorgesFerreira/dag-command/workflows/Java%20CI%20with%20Gradle/badge.svg) 
 
-![Java CI with Gradle](https://github.com/leandroBorgesFerreira/dag-command/workflows/Java%20CI%20with%20Gradle/badge.svg) 
 
 # dag-command
 
