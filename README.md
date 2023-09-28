@@ -42,12 +42,12 @@ dagCommand {
 
 #### Kotlin
 
-```
+```kotlin
 import io.github.leandroborgesferreira.dagcommand.DagCommandPlugin
 import io.github.leandroborgesferreira.dagcommand.extension.CommandExtension
 
 buildscript {
-	 repositories {
+    repositories {
     	mavenCentral() // or jcenter()
     }
     
@@ -64,9 +64,12 @@ the<CommandExtension>().run {
     this.outputType = "json"
     this.printModulesInfo = true
 }
+```
 
 OR the new structure: 
 
+
+```kotlin
 plugins {
     [...]
     id("io.github.leandroborgesferreira.dag-command") version "[version]" apply true
