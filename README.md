@@ -14,6 +14,8 @@ The pluggin also writes the dependency graph in a file.
 Work extension of this project: https://github.com/hpedrorodrigues/dag-modules
 
 ## Configuration
+You can check the plugin in the gradle plugin portal here: https://plugins.gradle.org/plugin/io.github.leandroborgesferreira.dag-command
+
 #### Groovy
 
 ```
