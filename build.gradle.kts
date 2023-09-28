@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
 val artifactIdVal = "dag-command"
-val versionVal = "1.7.1"
+val versionVal = "1.8.0"
 val publicationName = "dagCommand"
 
 group = "io.github.leandroborgesferreira"
@@ -12,12 +12,12 @@ fun getNexusUserName(): String? = System.getenv("SONATYPE_NEXUS_USERNAME")
 fun getNexusPassword(): String? = System.getenv("SONATYPE_NEXUS_PASSWORD")
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.9.10"
     id("java-gradle-plugin")
     signing
     `maven-publish`
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
-    id("com.gradle.plugin-publish") version "1.2.0"
+    id("com.gradle.plugin-publish") version "1.2.1"
 }
 
 sourceSets {
