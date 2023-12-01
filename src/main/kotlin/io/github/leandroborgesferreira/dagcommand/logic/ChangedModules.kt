@@ -6,7 +6,7 @@ import io.github.leandroborgesferreira.dagcommand.utils.CommandExecutor
 private const val BUILD_SRC = "buildSrc"
 
 fun changedModules(commandExec: CommandExecutor, defaultBranch: String, adjacencyList: AdjacencyList): List<String> =
-    commandExec.runCommand("git diff $defaultBranch --dirstat=files")
+    commandExec.runCommand("git diff $defaultBranch --dirstat=files,0")
         .map(::parseModuleName)
         .let { modules ->
             if (modules.contains(BUILD_SRC)) {
