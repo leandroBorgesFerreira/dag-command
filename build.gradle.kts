@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
 val artifactIdVal = "dag-command"
-val versionVal = "1.8.1"
+val versionVal = "1.8.2"
 val publicationName = "dagCommand"
 
 group = "io.github.leandroborgesferreira"
@@ -12,7 +12,7 @@ fun getNexusUserName(): String? = System.getenv("SONATYPE_NEXUS_USERNAME")
 fun getNexusPassword(): String? = System.getenv("SONATYPE_NEXUS_PASSWORD")
 
 plugins {
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.22"
     id("java-gradle-plugin")
     signing
     `maven-publish`
@@ -36,9 +36,9 @@ repositories {
 dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.22")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("org.mockito:mockito-core:5.10.0")
 }
 
 tasks.withType<Copy>().all { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
