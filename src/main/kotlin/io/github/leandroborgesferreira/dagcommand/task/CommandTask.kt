@@ -74,11 +74,11 @@ abstract class CommandTask : DefaultTask() {
 
         val changedModules: List<String> =
             changedModules(CommandExec, config.defaultBranch, adjacencyList).also { modules ->
-                println("Changed modules: ${modules.joinToString()}\n")
+                println("\nChanged modules: ${modules.joinToString()}")
             }
 
         val affectedModules: Set<String> = affectedModules(adjacencyList, changedModules).also { modules ->
-            println("Affected modules: ${modules.joinToString()}\n")
+            println("\nAffected modules: ${modules.joinToString()}")
         }
 
         when (config.outputType) {
