@@ -29,4 +29,3 @@ private fun parseFilter(filterString: String): Set<String> {
     val typeOfT: Type = TypeToken.getParameterized(Set::class.java, String::class.java).type
     return getGson(false).fromJson(filterString, typeOfT)
 }
-
