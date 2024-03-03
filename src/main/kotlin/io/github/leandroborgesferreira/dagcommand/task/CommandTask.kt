@@ -1,21 +1,24 @@
 package io.github.leandroborgesferreira.dagcommand.task
 
-import io.github.leandroborgesferreira.dagcommand.csv.printableCsv
-import io.github.leandroborgesferreira.dagcommand.csv.toPrintableCsv
 import io.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 import io.github.leandroborgesferreira.dagcommand.domain.Config
-import io.github.leandroborgesferreira.dagcommand.domain.GraphInformation
 import io.github.leandroborgesferreira.dagcommand.enums.OutputType
-import io.github.leandroborgesferreira.dagcommand.logic.*
-import io.github.leandroborgesferreira.dagcommand.output.writeToFile
+import io.github.leandroborgesferreira.dagcommand.logic.affectedModules
+import io.github.leandroborgesferreira.dagcommand.logic.changedModules
+import io.github.leandroborgesferreira.dagcommand.logic.createEdgeList
+import io.github.leandroborgesferreira.dagcommand.logic.generalInformation
+import io.github.leandroborgesferreira.dagcommand.logic.groupByStages
+import io.github.leandroborgesferreira.dagcommand.logic.nodesData
+import io.github.leandroborgesferreira.dagcommand.logic.parseAdjacencyList
+import io.github.leandroborgesferreira.dagcommand.output.addHeader
+import io.github.leandroborgesferreira.dagcommand.output.commandWithFeedback
+import io.github.leandroborgesferreira.dagcommand.output.createPrintFn
+import io.github.leandroborgesferreira.dagcommand.output.printConfig
+import io.github.leandroborgesferreira.dagcommand.output.printGraphInfo
 import io.github.leandroborgesferreira.dagcommand.utils.CommandExec
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import java.io.File
 
 private const val OUTPUT_DIRECTORY_NAME = "dag-command"
 private const val OUTPUT_FILE_NAME_AFFECTED = "affected-modules"
@@ -33,43 +36,31 @@ abstract class CommandTask : DefaultTask() {
     private fun command() {
         printConfig(project, config)
 
+        val printFn = createPrintFn(config.outputType, buildPath(), OUTPUT_DIRECTORY_NAME)
         val adjacencyList: AdjacencyList = parseAdjacencyList(project, config)
 
         if (config.printModulesInfo) {
             commandWithFeedback("Writing adjacency list...") {
-                when (config.outputType) {
-                    OutputType.JSON -> jsonOutput(OUTPUT_GRAPH, adjacencyList)
-                    OutputType.CSV -> jsonOutput(
-                        OUTPUT_GRAPH,
-                        adjacencyList
-                    ) //There's still not CSV support for adjacency list
-                }
+                printFn(OUTPUT_GRAPH, adjacencyList)
             }
 
             val edgeList = createEdgeList(adjacencyList)
             commandWithFeedback("Writing edges list...") {
-                when (config.outputType) {
-                    OutputType.JSON -> jsonOutput(OUTPUT_EDGE_LIST, edgeList)
-                    OutputType.CSV -> csvOutput(OUTPUT_EDGE_LIST, edgeList.toPrintableCsv())
-                }
+                printFn(OUTPUT_EDGE_LIST, edgeList)
             }
 
             val nodeList = nodesData(adjacencyList)
+            val buildStages = nodeList.groupByStages()
             commandWithFeedback("Build stages...") {
-                val buildStages = nodeList.groupByStages()
-
-                when (config.outputType) {
-                    OutputType.JSON -> jsonOutput(OUTPUT_NODE_LIST, nodeList)
-                    OutputType.CSV -> csvOutput(OUTPUT_NODE_LIST, nodeList.printableCsv())
-                }
-
-                when (config.outputType) {
-                    OutputType.JSON -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
-                    OutputType.CSV -> jsonOutput(BUILD_STAGES, buildStages, prettyPrint = true)
-                }
+                printFn(OUTPUT_NODE_LIST, nodeList)
+                printFn(BUILD_STAGES, buildStages)
             }
 
-            generalInformation(adjacencyList, nodeList = nodeList, edgeList = edgeList).let(::printGraphInfo)
+            generalInformation(
+                adjacencyList,
+                nodeList = nodeList,
+                edgeList = edgeList
+            ).let(::printGraphInfo)
         }
 
         val changedModules: List<String> =
@@ -77,63 +68,19 @@ abstract class CommandTask : DefaultTask() {
                 println("\nChanged modules: ${modules.joinToString()}")
             }
 
-        val affectedModules: Set<String> = affectedModules(adjacencyList, changedModules).also { modules ->
-            println("\nAffected modules: ${modules.joinToString()}")
-        }
+        val affectedModules: Collection<String> =
+            affectedModules(adjacencyList, changedModules).also { modules ->
+                println("\nAffected modules: ${modules.joinToString()}")
+            }.let { modules ->
+                if (config.outputType == OutputType.CSV) {
+                    modules.addHeader("Module")
+                } else {
+                    modules
+                }
+            }
 
-        when (config.outputType) {
-            OutputType.JSON -> jsonOutput(OUTPUT_FILE_NAME_AFFECTED, affectedModules)
-            OutputType.CSV -> csvOutput(OUTPUT_FILE_NAME_AFFECTED, affectedModules.addHeader("Module"))
-        }
+        printFn(OUTPUT_FILE_NAME_AFFECTED, affectedModules)
     }
 
-    private fun buildPath() = config.outputPath ?: project.buildDir.path
-
-    private fun jsonOutput(fileName: String, data: Any, prettyPrint: Boolean = false) {
-        writeToFile(
-            File(buildPath(), OUTPUT_DIRECTORY_NAME),
-            "$fileName.json",
-            getGson(prettyPrint).toJson(data)
-        )
-    }
-
-    private fun csvOutput(fileName: String, lines: Iterable<String>) {
-        writeToFile(
-            File(buildPath(), OUTPUT_DIRECTORY_NAME),
-            "$fileName.csv",
-            lines
-        )
-    }
+    private fun buildPath() = config.outputPath ?: project.layout.buildDirectory.asFile.get().path
 }
-
-private fun getGson(prettyPrint: Boolean) = GsonBuilder()
-    .apply {
-        if (prettyPrint) {
-            setPrettyPrinting()
-        }
-    }.create()
-
-private fun printConfig(project: Project, config: Config) {
-    println("--- Config ---")
-    println("Filter: ${config.filter.value}")
-    println("Default branch: ${config.defaultBranch}")
-    println("Output type: ${config.outputType.value}")
-    println("Output path: ${project.buildDir.path}")
-    println("--------------\n")
-}
-
-private fun commandWithFeedback(message: String, func: () -> Unit) {
-    print(message)
-    func()
-    print(" Done\n\n")
-}
-
-private fun printGraphInfo(information: GraphInformation) {
-    println("Graph information:")
-    println("Nodes count: ${information.nodeCount}")
-    println("Edges count: ${information.edgeCount}")
-    println("Build stages: ${information.buildStages}")
-    println("Build coefficient: ${information.buildCoefficient}")
-}
-
-fun Iterable<String>.addHeader(header: String) = listOf(header) + this

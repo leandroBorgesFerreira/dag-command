@@ -19,7 +19,7 @@ private fun Project.isModuleType(moduleType: ModuleType): Boolean {
     return when (moduleType) {
         ModuleType.Library -> isLibrary
         ModuleType.Application -> isApplication
-        else -> true
+        else -> false
     }
 }
 
