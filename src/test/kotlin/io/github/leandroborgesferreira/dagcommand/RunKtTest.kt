@@ -4,6 +4,8 @@ import io.github.leandroborgesferreira.dagcommand.enums.OutputType
 import io.github.leandroborgesferreira.dagcommand.utils.testProject
 import org.junit.Test
 
+private const val TEST_BUILD_PATH = "./test-results"
+
 class RunKtTest {
 
     @Test
@@ -13,7 +15,7 @@ class RunKtTest {
             outputType = OutputType.JSON_PRETTY,
             defaultBranch = "main",
             printModulesInfo = true,
-            buildPath = "./TestResults"
+            buildPath = TEST_BUILD_PATH
         )
     }
 
@@ -24,7 +26,7 @@ class RunKtTest {
             outputType = OutputType.JSON_PRETTY,
             defaultBranch = "main",
             printModulesInfo = true,
-            buildPath = "./TestResults"
+            buildPath = TEST_BUILD_PATH
         )
     }
 
