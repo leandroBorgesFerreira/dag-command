@@ -1,7 +1,6 @@
 package io.github.leandroborgesferreira.dagcommand
 
 import io.github.leandroborgesferreira.dagcommand.enums.OutputType
-import io.github.leandroborgesferreira.dagcommand.logic.toDagProjectList
 import org.junit.Test
 
 class RunKtTest {
@@ -13,7 +12,7 @@ class RunKtTest {
             outputType = OutputType.JSON_PRETTY,
             defaultBranch = "main",
             printModulesInfo = true,
-            buildPath = "./"
+            buildPath = "./TestResults"
         )
     }
 
