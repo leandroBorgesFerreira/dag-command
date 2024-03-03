@@ -33,7 +33,7 @@ buildscript {
 apply plugin: 'io.github.leandroborgesferreira.dag-command'
 
 dagCommand {
-    filter = "all"
+    filterModules = "[\"filter:your:module:out!\"]"
     defaultBranch = "origin/develop"
     outputType = "json"
     printModulesInfo = true
@@ -59,7 +59,7 @@ buildscript {
 apply<DagCommandPlugin>()
 
 the<CommandExtension>().run {
-    this.filter = "all"
+    this.filterModules = "[\"filter:your:module:out!\"]"
     this.defaultBranch = "master"
     this.outputType = "json"
     this.printModulesInfo = true
@@ -76,7 +76,7 @@ plugins {
 }
 
 dagCommand {
-    filter = "all"
+    filterModules = "[\"filter:your:module:out!\"]"
     defaultBranch = "origin/develop"
     outputType = "json"
     printModulesInfo = true
@@ -97,9 +97,9 @@ New files will be create inside `./build/dag-command` you will be able to find t
 ## Configuration
 
 ```
-filter
+filterModules
 ```
-You can filter between library, app, or all (which include both). 
+You can remove modules that you dont want to include using this parameter.
 
 ```
 defaultBranch
