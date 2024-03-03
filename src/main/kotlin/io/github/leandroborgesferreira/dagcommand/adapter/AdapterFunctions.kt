@@ -7,21 +7,23 @@ import io.github.leandroborgesferreira.dagcommand.extension.CommandExtension
 
 fun CommandExtension.parse(): Config =
     Config(
-        filter = io.github.leandroborgesferreira.dagcommand.adapter.findFilter(filter),
+        filter = findFilter(filter),
         defaultBranch = defaultBranch,
-        outputType = io.github.leandroborgesferreira.dagcommand.adapter.findOutputType(outputType),
+        outputType = findOutputType(outputType),
         outputPath = outputPath,
         printModulesInfo = printModulesInfo
     )
 
 private fun findFilter(filter: String): ModuleType =
-    ModuleType
-        .values()
+    ModuleType.entries
         .find { enum -> enum.value.equals(filter, ignoreCase = true) }
         ?: throw IllegalStateException("This type of filter: $filter. Is not supported.")
 
-private fun findOutputType(outputType: String): OutputType =
-    OutputType
-        .values()
+private fun findOutputType(outputType: String): OutputType {
+    val entries = OutputType.entries
+    return OutputType.entries
         .find { enum -> enum.value.equals(outputType, ignoreCase = true) }
-        ?: throw IllegalStateException("This type of output: $outputType. Is not supported.")
+        ?: throw IllegalStateException(
+            "This type of output: $outputType. Is not supported. Supported types are: ${entries.joinToString()}"
+        )
+}

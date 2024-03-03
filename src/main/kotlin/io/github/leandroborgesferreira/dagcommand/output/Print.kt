@@ -67,10 +67,11 @@ internal fun printConfig(project: Project, config: Config) {
     println("--------------\n")
 }
 
-internal fun commandWithFeedback(message: String, func: () -> Unit) {
+internal fun <T> commandWithFeedback(message: String, func: () -> T): T {
     print(message)
-    func()
+    val result = func()
     print(" Done\n\n")
+    return result
 }
 
 internal fun printGraphInfo(information: GraphInformation) {

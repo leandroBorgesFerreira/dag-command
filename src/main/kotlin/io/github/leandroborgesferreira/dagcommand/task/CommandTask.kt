@@ -44,16 +44,24 @@ abstract class CommandTask : DefaultTask() {
                 printFn(OUTPUT_GRAPH, adjacencyList)
             }
 
-            val edgeList = createEdgeList(adjacencyList)
-            commandWithFeedback("Writing edges list...") {
-                printFn(OUTPUT_EDGE_LIST, edgeList)
+            val edgeList = commandWithFeedback("Writing edges list...") {
+                createEdgeList(adjacencyList).also {
+                    printFn(OUTPUT_EDGE_LIST, createEdgeList(adjacencyList))
+                }
             }
 
-            val nodeList = nodesData(adjacencyList)
-            val buildStages = nodeList.groupByStages()
-            commandWithFeedback("Build stages...") {
+            val nodeList = commandWithFeedback("Build stages...") {
+                println("nodeList...")
+                val nodeList = nodesData(adjacencyList)
+                println("buildStages...")
+                val buildStages = nodeList.groupByStages()
+
+                println("printFn nodeList...")
                 printFn(OUTPUT_NODE_LIST, nodeList)
+                println("printFn buildStages...")
                 printFn(BUILD_STAGES, buildStages)
+
+                nodeList
             }
 
             generalInformation(

@@ -26,7 +26,6 @@ sourceSets {
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
@@ -117,5 +116,6 @@ signing {
         )
     }
 
-    sign(publishing.publications[publicationName])
+//    sign(publishing.publications[publicationName])
 }
+
