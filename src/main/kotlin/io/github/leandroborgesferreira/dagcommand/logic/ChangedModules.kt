@@ -5,7 +5,11 @@ import io.github.leandroborgesferreira.dagcommand.utils.CommandExecutor
 
 private const val BUILD_SRC = "buildSrc"
 
-fun changedModules(commandExec: CommandExecutor, defaultBranch: String, adjacencyList: AdjacencyList): List<String> =
+fun changedModules(
+    commandExec: CommandExecutor,
+    defaultBranch: String,
+    adjacencyList: AdjacencyList
+): List<String> =
     commandExec.runCommand("git diff $defaultBranch --dirstat=files,0")
         .map(::parseModuleName)
         .let { modules ->
@@ -17,7 +21,16 @@ fun changedModules(commandExec: CommandExecutor, defaultBranch: String, adjacenc
         }
 
 
-private fun parseModuleName(commandResult: String): String =
-    commandResult.trimStart()
-        .split(" ", limit = 2)[1]
-        .split("/", limit = 2)[0]
+private fun parseModuleName(commandResult: String): String {
+    val fullPath = commandResult.trimStart().split(" ", limit = 2)[1]
+
+    return when {
+        fullPath.contains("/src") ->
+            ":${fullPath.split("/src", limit = 2)[0].replace("/", ":")}"
+        
+        fullPath.contains("/") -> ":${fullPath.split("/", limit = 2)[0]}"
+
+        else -> ""
+    }
+}
+

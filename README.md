@@ -133,7 +133,7 @@ and parses the module accordingly with the folders that were changed. The output
 "4.4% C/src/main/java/com/module1/network/responsemodels/",
 ```
 
-**This module assumes that the modules are in the folders in the root of the project** (that's a very common case). All folders in the root of the project don't need to be modules, but all modules must be in thier on folders in the root. So in this example above, the changed modules would be **A**, **B** and **C**, if they are part of the modules of the project. 
+**Prior to version 1.10.0, any kind of folder structure is accepted, before it was only possible to have the modules in the root folder.** 
 
 ### Limitations
 At the moment, this project doesn't detect changes in the root folder, so the configuration of the gradle modules should also be a module, it is recommended the **buildSrc** folder. When the pluggin detects changes in the **buildSrc** folder, it considers that all modules were affected by the PR. 

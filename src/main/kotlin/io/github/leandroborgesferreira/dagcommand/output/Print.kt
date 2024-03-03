@@ -60,7 +60,7 @@ private fun csvOutput(buildPath: String, filePath: String, fileName: String, lin
 
 internal fun printConfig(project: Project, config: Config) {
     println("--- Config ---")
-    println("Filter modules: ${config.filterModules}")
+    println("Filter modules: ${config.filterModules.joinToString()}")
     println("Default branch: ${config.defaultBranch}")
     println("Output type: ${config.outputType.value}")
     println("Output path: ${project.layout.buildDirectory.asFile.get().path}")
