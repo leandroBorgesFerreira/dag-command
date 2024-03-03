@@ -136,4 +136,4 @@ and parses the module accordingly with the folders that were changed. The output
 **Prior to version 1.10.0, any kind of folder structure is accepted, before it was only possible to have the modules in the root folder.** 
 
 ### Limitations
-At the moment, this project doesn't detect changes in the root folder, so the configuration of the gradle modules should also be a module, it is recommended the **buildSrc** folder. When the pluggin detects changes in the **buildSrc** folder, it considers that all modules were affected by the PR. 
+At the moment, this project doesn't detect changes in the root folder. It only detects changes inside your gradle modules, `buildSrc` file and `/gradle` file. If changes detected are inside `buildSrc` or `gradle`, it considers that all modules are affected by the change. 
