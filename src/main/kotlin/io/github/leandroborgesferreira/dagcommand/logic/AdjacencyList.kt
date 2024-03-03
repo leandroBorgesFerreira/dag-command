@@ -12,8 +12,6 @@ fun parseAdjacencyList(projects: Iterable<DagProject>): Map<String, Set<String>>
         }.let(::revertAdjacencyList)
 
 private fun filterModules(projects: Iterable<DagProject>): Iterable<DagProject> {
-    println("All projects: ${projects.joinToString { it.fullName }}")
-
     // All words present in the modules, divided by ':'
     val allWords = projects.map { project -> project.fullName }
         .flatMap { name -> name.split(":") }

@@ -60,7 +60,7 @@ private fun csvOutput(buildPath: String, filePath: String, fileName: String, lin
 
 internal fun printConfig(project: Project, config: Config) {
     println("--- Config ---")
-    println("Filter: ${config.filter.value}")
+    println("Filter modules: ${config.filterModules}")
     println("Default branch: ${config.defaultBranch}")
     println("Output type: ${config.outputType.value}")
     println("Output path: ${project.layout.buildDirectory.asFile.get().path}")
@@ -82,7 +82,7 @@ internal fun printGraphInfo(information: GraphInformation) {
     println("Build coefficient: ${information.buildCoefficient}")
 }
 
-private fun getGson(prettyPrint: Boolean) = GsonBuilder()
+internal fun getGson(prettyPrint: Boolean) = GsonBuilder()
     .apply {
         if (prettyPrint) {
             setPrettyPrinting()

@@ -17,7 +17,8 @@ class RunKtTest {
             outputType = OutputType.JSON_PRETTY,
             defaultBranch = "main",
             printModulesInfo = true,
-            buildPath = TEST_BUILD_PATH
+            buildPath = TEST_BUILD_PATH,
+            filterModules = emptySet()
         )
     }
 
@@ -28,7 +29,8 @@ class RunKtTest {
             outputType = OutputType.JSON_PRETTY,
             defaultBranch = "main",
             printModulesInfo = true,
-            buildPath = TEST_BUILD_PATH
+            buildPath = TEST_BUILD_PATH,
+            filterModules = emptySet()
         )
 
         val checkFilesMap = getFilenames("$TEST_BUILD_PATH/check")

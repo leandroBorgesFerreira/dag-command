@@ -22,7 +22,8 @@ abstract class CommandTask : DefaultTask() {
             outputType = config.outputType,
             defaultBranch = config.defaultBranch,
             printModulesInfo = config.printModulesInfo,
-            buildPath = buildPath()
+            buildPath = buildPath(),
+            filterModules = config.filterModules
         )
     }
 
