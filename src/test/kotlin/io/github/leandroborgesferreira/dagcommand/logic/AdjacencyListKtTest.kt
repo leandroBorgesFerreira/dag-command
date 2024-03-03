@@ -14,10 +14,10 @@ class AdjacencyListKtTest {
 
 private fun simpleRevertedGraph() =
     mapOf(
-        "A" to setOf(),
-        "B" to setOf("A"),
-        "C" to setOf("A", "B"),
-        "D" to setOf("A"),
-        "E" to setOf("C", "D"),
-        "F" to setOf("B", "C", "D", "E")
+        ":A" to setOf(),
+        ":B" to setOf(":A"),
+        ":C" to setOf(":A", ":B"),
+        ":D" to setOf(":A"),
+        ":E" to setOf(":C", ":D"),
+        ":F" to setOf(":B", ":C", ":D", ":E")
     )
