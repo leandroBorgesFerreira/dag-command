@@ -15,8 +15,7 @@ fun Project.toDagProjectList(): List<DagProject> = project.subprojects.map { pro
 
 private fun Project.toDagProject(): DagProject =
     DagProject(
-        shortName = name,
-        displayName = displayName,
+        fullName = this.path,
         dependencies = parseDependencies().map { project ->
             project.toDagProject()
         }.toSet()

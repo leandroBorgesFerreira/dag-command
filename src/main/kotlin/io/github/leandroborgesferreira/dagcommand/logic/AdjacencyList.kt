@@ -7,11 +7,13 @@ fun parseAdjacencyList2(projects: Iterable<DagProject>): Map<String, Set<String>
     projects
         .let(::filterModules)
         .associate { subProject ->
-            val dependencies = subProject.dependencies.map { dep -> dep.displayName }.toSet()
-            subProject.displayName to dependencies
+            val dependencies = subProject.dependencies.map { dep -> dep.fullName }.toSet()
+            subProject.fullName to dependencies
         }.let(::revertAdjacencyList)
 
 private fun filterModules(projects: Iterable<DagProject>): Iterable<DagProject> {
+    println("All projects: ${projects.joinToString { it.fullName }}")
+
     return projects
 }
 

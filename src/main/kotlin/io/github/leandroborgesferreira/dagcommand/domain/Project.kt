@@ -1,7 +1,6 @@
 package io.github.leandroborgesferreira.dagcommand.domain
 
 data class DagProject(
-    val shortName: String,
-    val displayName: String,
+    val fullName: String,
     val dependencies: Set<DagProject>
 )
