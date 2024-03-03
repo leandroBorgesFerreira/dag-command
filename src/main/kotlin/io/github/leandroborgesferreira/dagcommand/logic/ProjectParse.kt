@@ -1,27 +1,20 @@
 package io.github.leandroborgesferreira.dagcommand.logic
 
-import io.github.leandroborgesferreira.dagcommand.domain.Config
-import io.github.leandroborgesferreira.dagcommand.enums.ModuleType
-import io.github.leandroborgesferreira.dagcommand.enums.PlugginType
+import io.github.leandroborgesferreira.dagcommand.domain.DagProject
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ProjectDependency
 
-fun parseAdjacencyList(project: Project, config: Config): Map<String, Set<String>> =
-    project.subprojects
-        .filter { subProject -> subProject.isModuleType(config.filter) }
-        .associate { subProject -> subProject.name to subProject.parseDependencies().map { dep -> dep.name }.toSet() }
-        .let(::revertAdjacencyList)
-
-private fun Project.isModuleType(moduleType: ModuleType): Boolean {
-    val isLibrary = project.plugins.hasPlugin(PlugginType.Library.value)
-    val isApplication = project.plugins.hasPlugin(PlugginType.Application.value)
-
-    return when (moduleType) {
-        ModuleType.Library -> isLibrary
-        ModuleType.Application -> isApplication
-        else -> true
-    }
+fun Project.toDagProjectList(): List<DagProject> = project.subprojects.map { project ->
+    project.toDagProject()
 }
+
+private fun Project.toDagProject(): DagProject =
+    DagProject(
+        fullName = this.path,
+        dependencies = parseDependencies().map { project ->
+            project.toDagProject()
+        }.toSet()
+    )
 
 private fun Project.parseDependencies(): List<Project> =
     project.configurations

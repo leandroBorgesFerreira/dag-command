@@ -3,10 +3,10 @@ package io.github.leandroborgesferreira.dagcommand.output
 import java.io.BufferedWriter
 import java.io.File
 
-fun writeToFile(directory: File, fileName: String, content: Iterable<String>) {
+fun writeToFile(directory: File, fileName: String, content: Iterable<*>) {
     createFileBuffer(directory, fileName).use { writer ->
         content.forEach { line ->
-            writer.write(line)
+            writer.write(line.toString())
             writer.newLine()
         }
     }

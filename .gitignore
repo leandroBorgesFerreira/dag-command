@@ -13,3 +13,5 @@ out
 gradle.properties
 local.properties
 secret-ring.gpg
+
+test-results/dag-command/*

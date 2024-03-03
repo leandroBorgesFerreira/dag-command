@@ -27,4 +27,4 @@ private fun commandExecList(): List<String> =
         "25.0% Z/src/main/java/com/something/android/activities/fragments/blabla/"
     )
 
-private fun expectedModules(): List<String> = listOf("A", "B")
+private fun expectedModules(): List<String> = listOf(":A", ":B")

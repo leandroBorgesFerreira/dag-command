@@ -49,7 +49,7 @@ class ChangedModulesKtTest {
     fun `proves that changes get parsed correctly`() {
         whenever(commandExecutor.runCommand(any())) doReturn changedModules
 
-        val expected = listOf("A", "B", "C", "D", "E", "F")
+        val expected = listOf(":A", ":B", ":C", ":D", ":E", ":F")
 
         assertEquals(expected, changedModules(commandExecutor, "master", simpleGraph()))
     }
