@@ -9,7 +9,7 @@ import io.github.leandroborgesferreira.dagcommand.logic.createEdgeList
 import io.github.leandroborgesferreira.dagcommand.logic.generalInformation
 import io.github.leandroborgesferreira.dagcommand.logic.groupByStages
 import io.github.leandroborgesferreira.dagcommand.logic.nodesData
-import io.github.leandroborgesferreira.dagcommand.logic.parseAdjacencyList2
+import io.github.leandroborgesferreira.dagcommand.logic.parseAdjacencyList
 import io.github.leandroborgesferreira.dagcommand.output.addHeader
 import io.github.leandroborgesferreira.dagcommand.output.commandWithFeedback
 import io.github.leandroborgesferreira.dagcommand.output.createPrintFn
@@ -31,7 +31,7 @@ fun runDagCommand(
     buildPath: String
 ) {
     val printFn = createPrintFn(outputType, buildPath, OUTPUT_DIRECTORY_NAME)
-    val adjacencyList: AdjacencyList = parseAdjacencyList2(project)
+    val adjacencyList: AdjacencyList = parseAdjacencyList(project)
 
     if (printModulesInfo) {
         commandWithFeedback("Writing adjacency list...") {
