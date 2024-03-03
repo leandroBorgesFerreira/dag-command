@@ -3,15 +3,18 @@ package io.github.leandroborgesferreira.dagcommand.logic
 import io.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
 
 fun compilePhases(adjacencyList: AdjacencyList): MutableList<MutableSet<String>> {
+
     // First, create a topologically sorted version of the graph
     val sortedGraph = topologicalSort(adjacencyList)
-    val phases: MutableList<MutableSet<String>> = mutableListOf(mutableSetOf(sortedGraph.first()))
+    val phases: MutableList<MutableSet<String>> =
+        sortedGraph.firstOrNull()?.let { mutableListOf(mutableSetOf(it)) } ?: mutableListOf()
 
     sortedGraph.forEach { currentModule ->
         val currentPhase = phases.last()
         /* Expands the modules of last phase to find if current module is in the next phase or is inside the
          * current one. */
-        val isNeighbor = currentPhase.any { module -> adjacencyList[module]?.contains(currentModule) == true }
+        val isNeighbor =
+            currentPhase.any { module -> adjacencyList[module]?.contains(currentModule) == true }
         if (isNeighbor) {
             /*
              * If the node is a neighbor, that means it is the next level of the compilation because it depends on a
