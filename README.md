@@ -5,7 +5,7 @@
 
 Affected modules by your branch. 
 
-This pluggin makes a diff from your branch and the `develop` branch and writes which modules in the graph were affected by your changes. It takes the changes modules and the traverse the dependent modules and return the affected ones. 
+This pluggin makes a diff from your branch and the main branch of your project and writes which modules in the graph were affected by your changes. It takes the changes modules and the traverse the dependent modules and return the affected ones. 
 
 The pluggin also writes the dependency graph in a file. 
 
