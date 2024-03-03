@@ -116,6 +116,6 @@ signing {
         )
     }
 
-//    sign(publishing.publications[publicationName])
+    sign(publishing.publications[publicationName])
 }
 
