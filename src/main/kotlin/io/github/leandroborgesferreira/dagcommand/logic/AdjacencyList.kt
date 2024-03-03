@@ -27,7 +27,7 @@ private fun filterModules(projects: Iterable<DagProject>): Iterable<DagProject> 
         count > 1
     }.keys
 
-    return projects.filter { project -> !nonModulesWords.contains(project.fullName) }
+    return projects.filter { project -> !nonModulesWords.contains(project.lastName) }
 }
 
 fun revertAdjacencyList(adjacencyList: AdjacencyList): AdjacencyList {
