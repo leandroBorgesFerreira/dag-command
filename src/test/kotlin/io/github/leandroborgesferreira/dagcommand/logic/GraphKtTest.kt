@@ -1,8 +1,11 @@
 package io.github.leandroborgesferreira.dagcommand.logic
 
 import io.github.leandroborgesferreira.dagcommand.domain.Node
+import io.github.leandroborgesferreira.dagcommand.domain.exception.CycleDetectedException
+import io.github.leandroborgesferreira.dagcommand.utils.cyclicalObjectGraph
 import io.github.leandroborgesferreira.dagcommand.utils.disconnectedGraph
 import io.github.leandroborgesferreira.dagcommand.utils.graphWithCycle
+import io.github.leandroborgesferreira.dagcommand.utils.objectGraph
 import io.github.leandroborgesferreira.dagcommand.utils.simpleGraph
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -60,8 +63,31 @@ class GraphKtTest {
         assertEquals(expected, result)
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = CycleDetectedException::class)
     fun `proves that cycles are detected`() {
         affectedModules(graphWithCycle(), listOf(":A", ":B", ":C"))
     }
+
+    @Test(expected = CycleDetectedException::class)
+    fun `cycles are detected when building DagProject`() {
+        cyclicalObjectGraph()
+            .iterableToDagProjectT(
+                filterModules = emptySet(),
+                visitedT = emptySet(),
+                getNext = { project -> project.next },
+                getName = { project -> project.name },
+            )
+    }
+
+    @Test
+    fun `iterableToDagProjectT should work`() {
+        objectGraph()
+            .iterableToDagProjectT(
+                filterModules = emptySet(),
+                visitedT = emptySet(),
+                getNext = { project -> project.next },
+                getName = { project -> project.name },
+            )
+    }
 }
+
