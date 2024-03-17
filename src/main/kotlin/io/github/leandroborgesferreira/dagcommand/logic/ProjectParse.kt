@@ -5,16 +5,11 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.ProjectDependency
 
 fun Project.toDagProjectList(filterModules: Set<String>): List<DagProject> =
-    project.subprojects.map { project ->
-        project.toDagProject(filterModules)
-    }
-
-private fun Project.toDagProject(filterModules: Set<String>): DagProject =
-    DagProject(
-        fullName = this.path,
-        dependencies = parseDependencies(filterModules).map { project ->
-            project.toDagProject(filterModules)
-        }.toSet()
+    project.subprojects.iterableToDagProjectT(
+        filterModules = filterModules,
+        visitedT = emptySet(),
+        getNext = { project -> project.parseDependencies(filterModules) },
+        getName = { project -> project.name },
     )
 
 private fun Project.parseDependencies(filterModules: Set<String>): List<Project> {

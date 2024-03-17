@@ -86,3 +86,61 @@ fun disconnectedGraph(): Map<String, Set<String>> =
         ":E" to emptySet(),
         ":F" to emptySet()
     )
+
+fun cyclicalObjectGraph(): List<GraphNode> =
+    listOf(
+        GraphNode(
+            name = "A",
+            next = listOf(
+                GraphNode(
+                    name = "B",
+                    next = listOf(
+                        GraphNode(name = "A")
+                    )
+                )
+            )
+        )
+    )
+
+
+fun objectGraph(): List<GraphNode> =
+    listOf(
+        GraphNode(
+            name = "A",
+            next = listOf(
+                GraphNode(
+                    name = "B",
+                    next = listOf(
+                        GraphNode(name = "E")
+                    )
+                )
+            )
+        ),
+        GraphNode(
+            name = "C",
+            next = listOf(
+                GraphNode(
+                    name = "B",
+                    next = listOf(
+                        GraphNode(name = "E")
+                    )
+                )
+            )
+        ),
+        GraphNode(
+            name = "D",
+            next = listOf(
+                GraphNode(
+                    name = "B",
+                    next = listOf(
+                        GraphNode(name = "E")
+                    )
+                )
+            )
+        ),
+    )
+
+data class GraphNode(
+    val name: String,
+    val next: Iterable<GraphNode> = emptySet()
+)

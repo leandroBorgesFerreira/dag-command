@@ -1,6 +1,8 @@
 package io.github.leandroborgesferreira.dagcommand.logic
 
 import io.github.leandroborgesferreira.dagcommand.domain.AdjacencyList
+import io.github.leandroborgesferreira.dagcommand.domain.DagProject
+import io.github.leandroborgesferreira.dagcommand.domain.exception.CycleDetectedException
 import java.util.TreeSet
 
 /**
@@ -42,7 +44,7 @@ private fun traverseGraph(
 ) {
     if (visited.contains(module)) {
         val graphString = "${visited.joinToString(separator = "->")}->$module"
-        throw IllegalStateException(
+        throw CycleDetectedException(
             "A cycle was detected in your graph. The part of the graph with the cycle is: $graphString"
         )
     }
@@ -56,4 +58,48 @@ private fun traverseGraph(
     adjacencyList[module]?.forEach { dependentModule ->
         traverseGraph(adjacencyList, dependentModule, visited + module, resultSet)
     }
+}
+
+internal fun <T> Iterable<T>.iterableToDagProjectT(
+    filterModules: Set<String>,
+    visitedT: Set<String>,
+    getNext: (T) -> Iterable<T>,
+    getName: (T) -> String
+) = map { project -> project.toDagProjectT(filterModules, visitedT, getNext, getName) }
+
+internal fun <T> T.toDagProjectT(
+    filterModules: Set<String>,
+    visitedT: Set<String>,
+    getNext: (T) -> Iterable<T>,
+    getName: (T) -> String,
+): DagProject {
+    val nextDependencies = getNext(this)
+    val nextNames = getNext(this).map(getName)
+    val name = getName(this)
+
+    println(
+        """
+            Current module: $name
+            Next names: ${nextNames.joinToString()}
+        """
+    )
+
+    if (nextNames.any(visitedT::contains)) {
+        val visitedAlready = nextNames.filter(visitedT::contains).distinct().joinToString()
+
+        throw CycleDetectedException(
+            """
+                A cycle was detected in the graph of dependencies of your project.
+                These modules appeared more than once: $visitedAlready. Trying to visit from: $name.
+                All nodes visited already in this path: ${visitedT.joinToString()}
+            """
+        )
+    }
+
+    return DagProject(
+        fullName = name,
+        dependencies = nextDependencies.map { project ->
+            project.toDagProjectT(filterModules, visitedT + name, getNext, getName)
+        }.toSet()
+    )
 }
