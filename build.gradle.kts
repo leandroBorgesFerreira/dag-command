@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
 val artifactIdVal = "dag-command"
-val versionVal = "1.10.0"
+val versionVal = "1.10.1"
 val publicationName = "dagCommand"
 
 group = "io.github.leandroborgesferreira"
