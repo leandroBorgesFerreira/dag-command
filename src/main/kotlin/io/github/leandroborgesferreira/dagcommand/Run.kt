@@ -29,13 +29,10 @@ fun runDagCommand(
     defaultBranch: String,
     printModulesInfo: Boolean,
     buildPath: String,
-    filterModules: Set<String>
 ) {
     val printFn = createPrintFn(outputType, buildPath, OUTPUT_DIRECTORY_NAME)
-    val filteredProject = project.filter { proj ->
-        !filterModules.contains(proj.fullName)
-    }
-    val adjacencyList: AdjacencyList = parseAdjacencyList(filteredProject)
+
+    val adjacencyList: AdjacencyList = parseAdjacencyList(project)
 
     if (printModulesInfo) {
         commandWithFeedback("Writing adjacency list...") {

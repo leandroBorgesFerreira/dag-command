@@ -18,7 +18,6 @@ class RunKtTest {
             defaultBranch = "main",
             printModulesInfo = true,
             buildPath = TEST_BUILD_PATH,
-            filterModules = emptySet()
         )
     }
 
@@ -30,7 +29,6 @@ class RunKtTest {
             defaultBranch = "main",
             printModulesInfo = true,
             buildPath = TEST_BUILD_PATH,
-            filterModules = emptySet()
         )
 
         val checkFilesMap = getFilenames("$TEST_BUILD_PATH/check")
