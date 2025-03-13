@@ -14,7 +14,7 @@ abstract class CommandTask : DefaultTask() {
     lateinit var config: Config
 
     @TaskAction
-    private fun command() {
+    fun command() {
         printConfig(project, config)
 
         runDagCommand(
