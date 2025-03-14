@@ -2,14 +2,14 @@ import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
 val artifactIdVal = "dag-command"
-val versionVal = "1.11.0"
+val versionVal = "1.12.0"
 val publicationName = "dagCommand"
 
 group = "io.github.leandroborgesferreira"
 version = versionVal
 
 plugins {
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "2.0.21"
     id("java-gradle-plugin")
     signing
     `maven-publish`
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.12.1")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.22")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
