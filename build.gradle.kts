@@ -1,8 +1,5 @@
-import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.FileInputStream
-
 val artifactIdVal = "dag-command"
-val versionVal = "1.12.0"
+val versionVal = "1.13.0"
 val publicationName = "dagCommand"
 
 group = "io.github.leandroborgesferreira"
@@ -13,7 +10,7 @@ plugins {
     id("java-gradle-plugin")
     signing
     `maven-publish`
-    id("com.gradle.plugin-publish") version "1.2.1"
+    id("com.gradle.plugin-publish") version "1.3.1"
 }
 
 sourceSets {
@@ -97,25 +94,12 @@ publishing {
 }
 
 signing {
-    val secretPropsFile: File = project.rootProject.file("local.properties")
+    useInMemoryPgpKeys(
+        System.getenv("SIGNING_KEY_ID"),
+        System.getenv("SIGNING_KEY"),
+        System.getenv("SIGNING_PASSWORD"),
+    )
 
-    if (secretPropsFile.exists()) {
-        val prop = Properties().apply {
-            load(FileInputStream(secretPropsFile))
-        }
-        useInMemoryPgpKeys(
-            prop.getProperty("signing.keyId"),
-            prop.getProperty("signing.key"),
-            prop.getProperty("signing.password"),
-        )
-    } else {
-        useInMemoryPgpKeys(
-            System.getenv("SIGNING_KEY_ID"),
-            System.getenv("SIGNING_KEY"),
-            System.getenv("SIGNING_PASSWORD"),
-        )
-    }
-
-//    sign(publishing.publications[publicationName])
+    sign(publishing.publications[publicationName])
 }
 
