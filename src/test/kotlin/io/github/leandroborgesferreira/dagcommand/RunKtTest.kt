@@ -4,7 +4,7 @@ import io.github.leandroborgesferreira.dagcommand.enums.OutputType
 import io.github.leandroborgesferreira.dagcommand.utils.testProject
 import org.junit.Test
 import java.io.File
-import kotlin.test.assertEquals
+import kotlin.test.assertContentEquals
 
 private const val TEST_BUILD_PATH = "./test-results"
 
@@ -18,6 +18,7 @@ class RunKtTest {
             defaultBranch = "main",
             printModulesInfo = true,
             buildPath = TEST_BUILD_PATH,
+            excludeIntermediateModules = true,
         )
     }
 
@@ -29,6 +30,7 @@ class RunKtTest {
             defaultBranch = "main",
             printModulesInfo = true,
             buildPath = TEST_BUILD_PATH,
+            excludeIntermediateModules = true,
         )
 
         val checkFilesMap = getFilenames("$TEST_BUILD_PATH/check")
@@ -36,7 +38,7 @@ class RunKtTest {
 
         checkFilesMap.forEach { (name, checkFile) ->
             val resultFile = resultFilesMap[name]!!
-            assertEquals(checkFile.readText(), resultFile.readText())
+            assertContentEquals(checkFile.readLines(), resultFile.readLines(), "Files $name are not equal")
         }
     }
 }

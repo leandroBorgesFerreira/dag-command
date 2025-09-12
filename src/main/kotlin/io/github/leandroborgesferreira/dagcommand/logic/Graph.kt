@@ -64,18 +64,20 @@ internal fun <T> Iterable<T>.iterableToDagProjectT(
     filterModules: Set<String>,
     visitedT: Set<String>,
     getNext: (T) -> Iterable<T>,
-    getName: (T) -> String
-) = map { project -> project.toDagProjectT(filterModules, visitedT, getNext, getName) }
+    getPath: (T) -> String,
+    getOutputName: (T) -> String
+) = map { project -> project.toDagProjectT(filterModules, visitedT, getNext, getPath, getOutputName) }
 
 internal fun <T> T.toDagProjectT(
     filterModules: Set<String>,
     visitedT: Set<String>,
     getNext: (T) -> Iterable<T>,
-    getName: (T) -> String,
+    getPath: (T) -> String,
+    getOutputName: (T) -> String,
 ): DagProject {
     val nextDependencies = getNext(this)
-    val nextNames = getNext(this).map(getName)
-    val name = getName(this)
+    val nextNames = nextDependencies.map(getPath)
+    val name = getOutputName(this)
 
     println(
         """
@@ -97,9 +99,10 @@ internal fun <T> T.toDagProjectT(
     }
 
     return DagProject(
-        fullName = name,
+        path = getPath(this),
+        outputName = name,
         dependencies = nextDependencies.map { project ->
-            project.toDagProjectT(filterModules, visitedT + name, getNext, getName)
+            project.toDagProjectT(filterModules, visitedT + name, getNext, getPath, getOutputName)
         }.toSet()
     )
 }

@@ -1,151 +1,151 @@
 [
   {
-    "name": ":writeopia",
+    "name": "writeopia",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":writeopia_models",
+    "name": "writeopia_models",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":writeopia_ui",
+    "name": "writeopia_ui",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:androidApp",
+    "name": "androidApp",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:desktopApp",
+    "name": "desktopApp",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:web",
+    "name": "web",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":common:endpoints",
+    "name": "endpoints",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":libraries:dbtest",
+    "name": "dbtest",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":plugins:writeopia_export",
+    "name": "writeopia_export",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":plugins:writeopia_import_document",
+    "name": "writeopia_import_document",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":plugins:writeopia_network",
+    "name": "writeopia_network",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":plugins:writeopia_persistence_core",
+    "name": "writeopia_persistence_core",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":plugins:writeopia_persistence_room",
+    "name": "writeopia_persistence_room",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":plugins:writeopia_persistence_sqldelight",
+    "name": "writeopia_persistence_sqldelight",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":plugins:writeopia_serialization",
+    "name": "writeopia_serialization",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:auth_core",
+    "name": "auth_core",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:common_ui",
+    "name": "common_ui",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:common_ui_tests",
+    "name": "common_ui_tests",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:persistence_bridge",
+    "name": "persistence_bridge",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:persistence_room",
+    "name": "persistence_room",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:persistence_sqldelight",
+    "name": "persistence_sqldelight",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:resources",
+    "name": "resources",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:core:utils",
+    "name": "utils",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:features:account",
+    "name": "account",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:features:auth",
+    "name": "auth",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":application:features:note_menu",
+    "name": "note_menu",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":backend:documents:documents_spring",
+    "name": "documents_spring",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":backend:editor:api_editor",
+    "name": "api_editor",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":backend:editor:api_editor_socket",
+    "name": "api_editor_socket",
     "buildStage": 0,
     "instability": 0.0
   },
   {
-    "name": ":backend:editor:api_editor_spring",
+    "name": "api_editor_spring",
     "buildStage": 0,
     "instability": 0.0
   }

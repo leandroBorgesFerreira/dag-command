@@ -13,7 +13,9 @@ fun CommandExtension.parse(): Config =
         outputType = findOutputType(outputType),
         outputPath = outputPath,
         printModulesInfo = printModulesInfo,
-        filterModules = filterModules?.let(::parseFilter) ?: emptySet()
+        filterModules = filterModules?.let(::parseFilter) ?: emptySet(),
+        useFullProjectPath = useProjectPathAsOutputName,
+        excludeIntermediateModules = excludeIntermediateModules,
     )
 
 private fun findOutputType(outputType: String): OutputType {

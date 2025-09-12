@@ -1,8 +1,9 @@
 package io.github.leandroborgesferreira.dagcommand.domain
 
 data class DagProject(
-    val fullName: String,
+    val path: String,
+    val outputName: String,
     val dependencies: Set<DagProject>
 ) {
-    val lastName: String = fullName.split(":").last()
+    val lastName: String = path.split(":").last()
 }

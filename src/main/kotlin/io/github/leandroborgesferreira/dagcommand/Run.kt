@@ -28,11 +28,12 @@ fun runDagCommand(
     outputType: OutputType,
     defaultBranch: String,
     printModulesInfo: Boolean,
+    excludeIntermediateModules: Boolean,
     buildPath: String,
 ) {
     val printFn = createPrintFn(outputType, buildPath, OUTPUT_DIRECTORY_NAME)
 
-    val adjacencyList: AdjacencyList = parseAdjacencyList(project)
+    val adjacencyList: AdjacencyList = parseAdjacencyList(project, excludeIntermediateModules)
 
     if (printModulesInfo) {
         commandWithFeedback("Writing adjacency list...") {

@@ -74,8 +74,9 @@ class GraphKtTest {
             .iterableToDagProjectT(
                 filterModules = emptySet(),
                 visitedT = emptySet(),
+                getPath = { project -> project.name },
                 getNext = { project -> project.next },
-                getName = { project -> project.name },
+                getOutputName = { project -> project.name },
             )
     }
 
@@ -85,8 +86,9 @@ class GraphKtTest {
             .iterableToDagProjectT(
                 filterModules = emptySet(),
                 visitedT = emptySet(),
+                getPath = { project -> project.name },
                 getNext = { project -> project.next },
-                getName = { project -> project.name },
+                getOutputName = { project -> project.name },
             )
     }
 }

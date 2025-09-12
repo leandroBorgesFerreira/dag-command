@@ -37,6 +37,8 @@ dagCommand {
     defaultBranch = "origin/develop"
     outputType = "json"
     printModulesInfo = true
+    useProjectPathAsOutputName = false
+    excludeIntermediateModules = false
 }
 ```
 
@@ -63,6 +65,8 @@ the<CommandExtension>().run {
     this.defaultBranch = "master"
     this.outputType = "json"
     this.printModulesInfo = true
+    this.useProjectPathAsOutputName = false
+    this.excludeIntermediateModules = false
 }
 ```
 
