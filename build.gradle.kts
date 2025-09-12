@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 val artifactIdVal = "dag-command"
 val versionVal = "1.13.0"
 val publicationName = "dagCommand"
@@ -39,6 +41,20 @@ tasks.withType<Copy>().all { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+kotlin {
+    // Uses JDK 21 for compilation and tests
+    jvmToolchain(21)
+    compilerOptions {
+        // Output Kotlin bytecode compatible with JDK 11
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
+
+// Output Java bytecode compatible with JDK 11
+tasks.withType(JavaCompile::class.java).configureEach {
+    options.release = 11
 }
 
 gradlePlugin {
