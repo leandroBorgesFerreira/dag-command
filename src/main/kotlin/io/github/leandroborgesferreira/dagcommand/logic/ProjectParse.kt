@@ -9,7 +9,7 @@ fun Project.toDagProjectList(filterModules: Set<String>): List<DagProject> =
         filterModules = filterModules,
         visitedT = emptySet(),
         getNext = { project -> project.parseDependencies(filterModules) },
-        getName = { project -> project.name },
+        getPath = { project -> project.path },
     )
 
 private fun Project.parseDependencies(filterModules: Set<String>): List<Project> {

@@ -7,13 +7,13 @@ fun parseAdjacencyList(projects: Iterable<DagProject>): Map<String, Set<String>>
     projects
         .let(::filterModules)
         .associate { subProject ->
-            val dependencies = subProject.dependencies.map { dep -> dep.fullName }.toSet()
-            subProject.fullName to dependencies
+            val dependencies = subProject.dependencies.map { dep -> dep.fullGradlePath }.toSet()
+            subProject.fullGradlePath to dependencies
         }.let(::revertAdjacencyList)
 
 private fun filterModules(projects: Iterable<DagProject>): Iterable<DagProject> {
     // All words present in the modules, divided by ':'
-    val allWords = projects.map { project -> project.fullName }
+    val allWords = projects.map { project -> project.fullGradlePath }
         .flatMap { name -> name.split(":") }
 
     /* When a word appears more than once, it means that it is actually a part of a path, not a

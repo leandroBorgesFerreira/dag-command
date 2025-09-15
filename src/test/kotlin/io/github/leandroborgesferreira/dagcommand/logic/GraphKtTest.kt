@@ -75,7 +75,7 @@ class GraphKtTest {
                 filterModules = emptySet(),
                 visitedT = emptySet(),
                 getNext = { project -> project.next },
-                getName = { project -> project.name },
+                getPath = { project -> project.path },
             )
     }
 
@@ -86,7 +86,7 @@ class GraphKtTest {
                 filterModules = emptySet(),
                 visitedT = emptySet(),
                 getNext = { project -> project.next },
-                getName = { project -> project.name },
+                getPath = { project -> project.path },
             )
     }
 }

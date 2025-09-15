@@ -4,46 +4,46 @@ import io.github.leandroborgesferreira.dagcommand.domain.DagProject
 import io.github.leandroborgesferreira.dagcommand.domain.Edge
 
 fun testProject() = listOf(
-    DagProject(fullName = ":application", dependencies = emptySet()),
-    DagProject(fullName = ":backend", dependencies = emptySet()),
-    DagProject(fullName = ":common", dependencies = emptySet()),
-    DagProject(fullName = ":libraries", dependencies = emptySet()),
-    DagProject(fullName = ":plugins", dependencies = emptySet()),
-    DagProject(fullName = ":writeopia", dependencies = emptySet()),
-    DagProject(fullName = ":writeopia_models", dependencies = emptySet()),
-    DagProject(fullName = ":writeopia_ui", dependencies = emptySet()),
-    DagProject(fullName = ":application:androidApp", dependencies = emptySet()),
-    DagProject(fullName = ":application:core", dependencies = emptySet()),
-    DagProject(fullName = ":application:desktopApp", dependencies = emptySet()),
-    DagProject(fullName = ":application:features", dependencies = emptySet()),
-    DagProject(fullName = ":application:web", dependencies = emptySet()),
-    DagProject(fullName = ":backend:documents", dependencies = emptySet()),
-    DagProject(fullName = ":backend:editor", dependencies = emptySet()),
-    DagProject(fullName = ":common:endpoints", dependencies = emptySet()),
-    DagProject(fullName = ":libraries:dbtest", dependencies = emptySet()),
-    DagProject(fullName = ":plugins:writeopia_export", dependencies = emptySet()),
-    DagProject(fullName = ":plugins:writeopia_import_document", dependencies = emptySet()),
-    DagProject(fullName = ":plugins:writeopia_network", dependencies = emptySet()),
-    DagProject(fullName = ":plugins:writeopia_persistence_core", dependencies = emptySet()),
-    DagProject(fullName = ":plugins:writeopia_persistence_room", dependencies = emptySet()),
-    DagProject(fullName = ":plugins:writeopia_persistence_sqldelight", dependencies = emptySet()),
-    DagProject(fullName = ":plugins:writeopia_serialization", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:auth_core", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:common_ui", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:common_ui_tests", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:persistence_bridge", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:persistence_room", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:persistence_sqldelight", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:resources", dependencies = emptySet()),
-    DagProject(fullName = ":application:core:utils", dependencies = emptySet()),
-    DagProject(fullName = ":application:features:account", dependencies = emptySet()),
-    DagProject(fullName = ":application:features:auth", dependencies = emptySet()),
-    DagProject(fullName = ":application:features:editor", dependencies = emptySet()),
-    DagProject(fullName = ":application:features:note_menu", dependencies = emptySet()),
-    DagProject(fullName = ":backend:documents:documents_spring", dependencies = emptySet()),
-    DagProject(fullName = ":backend:editor:api_editor", dependencies = emptySet()),
-    DagProject(fullName = ":backend:editor:api_editor_socket", dependencies = emptySet()),
-    DagProject(fullName = ":backend:editor:api_editor_spring", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":backend", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":common", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":libraries", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":writeopia", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":writeopia_models", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":writeopia_ui", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:androidApp", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:desktopApp", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:features", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:web", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":backend:documents", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":backend:editor", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":common:endpoints", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":libraries:dbtest", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins:writeopia_export", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins:writeopia_import_document", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins:writeopia_network", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins:writeopia_persistence_core", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins:writeopia_persistence_room", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins:writeopia_persistence_sqldelight", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":plugins:writeopia_serialization", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:auth_core", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:common_ui", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:common_ui_tests", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:persistence_bridge", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:persistence_room", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:persistence_sqldelight", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:resources", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:core:utils", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:features:account", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:features:auth", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:features:editor", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":application:features:note_menu", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":backend:documents:documents_spring", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":backend:editor:api_editor", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":backend:editor:api_editor_socket", dependencies = emptySet()),
+    DagProject(fullGradlePath = ":backend:editor:api_editor_spring", dependencies = emptySet()),
 )
 
 fun simpleGraph(): Map<String, Set<String>> =
@@ -90,12 +90,12 @@ fun disconnectedGraph(): Map<String, Set<String>> =
 fun cyclicalObjectGraph(): List<GraphNode> =
     listOf(
         GraphNode(
-            name = "A",
+            path = "A",
             next = listOf(
                 GraphNode(
-                    name = "B",
+                    path = "B",
                     next = listOf(
-                        GraphNode(name = "A")
+                        GraphNode(path = "A")
                     )
                 )
             )
@@ -106,34 +106,34 @@ fun cyclicalObjectGraph(): List<GraphNode> =
 fun objectGraph(): List<GraphNode> =
     listOf(
         GraphNode(
-            name = "A",
+            path = "A",
             next = listOf(
                 GraphNode(
-                    name = "B",
+                    path = "B",
                     next = listOf(
-                        GraphNode(name = "E")
+                        GraphNode(path = "E")
                     )
                 )
             )
         ),
         GraphNode(
-            name = "C",
+            path = "C",
             next = listOf(
                 GraphNode(
-                    name = "B",
+                    path = "B",
                     next = listOf(
-                        GraphNode(name = "E")
+                        GraphNode(path = "E")
                     )
                 )
             )
         ),
         GraphNode(
-            name = "D",
+            path = "D",
             next = listOf(
                 GraphNode(
-                    name = "B",
+                    path = "B",
                     next = listOf(
-                        GraphNode(name = "E")
+                        GraphNode(path = "E")
                     )
                 )
             )
@@ -141,6 +141,6 @@ fun objectGraph(): List<GraphNode> =
     )
 
 data class GraphNode(
-    val name: String,
+    val path: String,
     val next: Iterable<GraphNode> = emptySet()
 )
