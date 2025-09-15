@@ -64,22 +64,22 @@ internal fun <T> Iterable<T>.iterableToDagProjectT(
     filterModules: Set<String>,
     visitedT: Set<String>,
     getNext: (T) -> Iterable<T>,
-    getName: (T) -> String
-) = map { project -> project.toDagProjectT(filterModules, visitedT, getNext, getName) }
+    getPath: (T) -> String
+) = map { project -> project.toDagProjectT(filterModules, visitedT, getNext, getPath) }
 
 internal fun <T> T.toDagProjectT(
     filterModules: Set<String>,
     visitedT: Set<String>,
     getNext: (T) -> Iterable<T>,
-    getName: (T) -> String,
+    getPath: (T) -> String,
 ): DagProject {
     val nextDependencies = getNext(this)
-    val nextNames = getNext(this).map(getName)
-    val name = getName(this)
+    val nextNames = getNext(this).map(getPath)
+    val path = getPath(this)
 
     println(
         """
-            Current module: $name
+            Current module: $path
             Next names: ${nextNames.joinToString()}
         """
     )
@@ -90,16 +90,16 @@ internal fun <T> T.toDagProjectT(
         throw CycleDetectedException(
             """
                 A cycle was detected in the graph of dependencies of your project.
-                These modules appeared more than once: $visitedAlready. Trying to visit from: $name.
+                These modules appeared more than once: $visitedAlready. Trying to visit from: $path.
                 All nodes visited already in this path: ${visitedT.joinToString()}
             """
         )
     }
 
     return DagProject(
-        fullName = name,
+        fullGradlePath = path,
         dependencies = nextDependencies.map { project ->
-            project.toDagProjectT(filterModules, visitedT + name, getNext, getName)
+            project.toDagProjectT(filterModules, visitedT + path, getNext, getPath)
         }.toSet()
     )
 }
