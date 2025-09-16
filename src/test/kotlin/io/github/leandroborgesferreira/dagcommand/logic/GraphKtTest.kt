@@ -76,6 +76,7 @@ class GraphKtTest {
                 visitedT = emptySet(),
                 getNext = { project -> project.next },
                 getPath = { project -> project.path },
+                verbose = false
             )
     }
 
@@ -87,6 +88,7 @@ class GraphKtTest {
                 visitedT = emptySet(),
                 getNext = { project -> project.next },
                 getPath = { project -> project.path },
+                verbose = false
             )
     }
 }

@@ -13,7 +13,8 @@ fun CommandExtension.parse(): Config =
         outputType = findOutputType(outputType),
         outputPath = outputPath,
         printModulesInfo = printModulesInfo,
-        filterModules = filterModules?.let(::parseFilter) ?: emptySet()
+        filterModules = filterModules?.let(::parseFilter) ?: emptySet(),
+        verbose = verbose
     )
 
 private fun findOutputType(outputType: String): OutputType {

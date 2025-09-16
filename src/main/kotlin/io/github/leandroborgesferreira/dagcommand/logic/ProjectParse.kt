@@ -4,12 +4,13 @@ import io.github.leandroborgesferreira.dagcommand.domain.DagProject
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ProjectDependency
 
-fun Project.toDagProjectList(filterModules: Set<String>): List<DagProject> =
+fun Project.toDagProjectList(filterModules: Set<String>, verbose: Boolean): List<DagProject> =
     project.subprojects.iterableToDagProjectT(
         filterModules = filterModules,
         visitedT = emptySet(),
         getNext = { project -> project.parseDependencies(filterModules) },
         getPath = { project -> project.path },
+        verbose = verbose
     )
 
 private fun Project.parseDependencies(filterModules: Set<String>): List<Project> {

@@ -64,25 +64,29 @@ internal fun <T> Iterable<T>.iterableToDagProjectT(
     filterModules: Set<String>,
     visitedT: Set<String>,
     getNext: (T) -> Iterable<T>,
-    getPath: (T) -> String
-) = map { project -> project.toDagProjectT(filterModules, visitedT, getNext, getPath) }
+    getPath: (T) -> String,
+    verbose: Boolean
+) = map { project -> project.toDagProjectT(filterModules, visitedT, getNext, getPath, verbose) }
 
 internal fun <T> T.toDagProjectT(
     filterModules: Set<String>,
     visitedT: Set<String>,
     getNext: (T) -> Iterable<T>,
     getPath: (T) -> String,
+    verbose: Boolean
 ): DagProject {
     val nextDependencies = getNext(this)
     val nextNames = getNext(this).map(getPath)
     val path = getPath(this)
 
-    println(
-        """
-            Current module: $path
-            Next names: ${nextNames.joinToString()}
-        """
-    )
+    if (verbose) {
+        println(
+            """
+                Current module: $path
+                Next names: ${nextNames.joinToString()}
+            """
+        )
+    }
 
     if (nextNames.any(visitedT::contains)) {
         val visitedAlready = nextNames.filter(visitedT::contains).distinct().joinToString()
@@ -99,7 +103,7 @@ internal fun <T> T.toDagProjectT(
     return DagProject(
         fullGradlePath = path,
         dependencies = nextDependencies.map { project ->
-            project.toDagProjectT(filterModules, visitedT + path, getNext, getPath)
+            project.toDagProjectT(filterModules, visitedT + path, getNext, getPath, false)
         }.toSet()
     )
 }

@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val artifactIdVal = "dag-command"
-val versionVal = "1.13.0"
+val versionVal = "1.14.0"
 val publicationName = "dagCommand"
 
 group = "io.github.leandroborgesferreira"
@@ -25,6 +25,7 @@ sourceSets {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
