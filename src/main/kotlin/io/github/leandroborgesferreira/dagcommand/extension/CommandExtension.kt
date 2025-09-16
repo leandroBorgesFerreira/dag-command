@@ -6,4 +6,5 @@ open class CommandExtension(
     var outputPath: String? = null,
     var printModulesInfo: Boolean = true,
     var filterModules: String? = null,
+    var verbose: Boolean = false
 )

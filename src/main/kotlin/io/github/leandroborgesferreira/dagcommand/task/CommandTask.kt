@@ -18,7 +18,7 @@ abstract class CommandTask : DefaultTask() {
         printConfig(project, config)
 
         runDagCommand(
-            project = project.toDagProjectList(config.filterModules),
+            project = project.toDagProjectList(config.filterModules, config.verbose),
             outputType = config.outputType,
             defaultBranch = config.defaultBranch,
             printModulesInfo = config.printModulesInfo,

@@ -8,4 +8,5 @@ data class Config(
     val outputPath: String?,
     val printModulesInfo: Boolean,
     val filterModules: Set<String>,
+    val verbose: Boolean = false
 )
